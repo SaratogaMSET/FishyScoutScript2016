@@ -15,7 +15,7 @@ team = "649"
 
 
 teams ={
-'649':[{'match':4,'scouter':'Bassil','points':230},{'match':9,'scouter':'Koh Koh','points':120}]
+'649':[{'match':4,'scouter':'Bassil','points':230},{'match':9,'scouter':'Koh Koh','points':120},{'match':19,'scouter':'Neelus','points':420},{'match':30,'scouter':'Kabir','points':80}]
 }
 numberOfMatches = len(teams[team])
 # print str(teams[team(0['match'])])
@@ -26,8 +26,9 @@ def matchNumber():
 	c.drawString(height/48,width-2*(width/45),"Match")
 	c.line(height/15,width-width/50,height/15,width/50)
 	i=1
-	while i<numberOfMatches:
-		c.line(height-height/40,(i+1)*(width/16),height/50,(i+1)*(width/16))
+	while i<=numberOfMatches:
+		c.line(height-height/40,width-i*(width/20),height/50,width-i*(width/20))
+		c.drawString(height/48,width-(i+1)*(width/22),"test")
 		i+=1
 matchNumber()
 drawTable()
