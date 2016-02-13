@@ -22,7 +22,7 @@ teams = {
 27 [] boolean low goal shots, 28 [] boolean primarly did defense, 29 [] String comments,  30 [] boolean breach
 31 [] boolean capture,`4te 32 [] int win/loss/tie"""
 
-'8': { '1',  ,
+'8': { '1',  
 '100': [][],
 '254': [][],
 '649': [][]
