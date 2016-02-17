@@ -1,0 +1,21 @@
+Team Number, 287
+Match Number, 33
+Scouter Name, Suneel
+Defenses on Field, RP, SP, DB, RW, LB
+Spy Zone, False
+Auto Reaches Defense, True
+Auto Crosses Defense, DB, RW
+Auto High Goal Shots, 1 1 0
+Auto Low Goal Shots, 1
+Difficulty to Cross RP, 0
+Difficulty to Cross SP, 2 1
+Difficulty to Cross DB, 1
+Difficulty to Cross RW, 0 2 0 1
+Difficulty to Cross LB, 2 0 1
+Teleop High Goal Shots, 1 0 1 1 1
+Teleop Low Goal Shots, 1 1
+Total Points, 409
+Play Defense, False
+End Game, Hang, Challenge, Capture, Breach
+Result, Win
+Notes, WOW

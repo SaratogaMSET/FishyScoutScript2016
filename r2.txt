@@ -1,0 +1,21 @@
+Team Number, 77
+Match Number, 56
+Scouter Name, Trishla
+Defenses on Field, RP, SP, DB, RW, LB
+Spy Zone, True
+Auto Reaches Defense, True
+Auto Crosses Defense, DB
+Auto High Goal Shots, 1 1 0
+Auto Low Goal Shots, 1
+Difficulty to Cross RP, 3
+Difficulty to Cross SP, 2 1
+Difficulty to Cross DB, 1
+Difficulty to Cross RW, 3 3 1
+Difficulty to Cross LB, 
+Teleop High Goal Shots, 0
+Teleop Low Goal Shots, 1 1
+Total Points, 20
+Play Defense, False
+End Game, Breach
+Result, Win
+Notes, not that good

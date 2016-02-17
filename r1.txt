@@ -1,0 +1,21 @@
+Team Number, 144
+Match Number, 9
+Scouter Name, Kedar
+Defenses on Field, PC, SP, M, RW, LB
+Spy Zone, True
+Auto Reaches Defense, True
+Auto Crosses Defense, LB
+Auto High Goal Shots, 0 0
+Auto Low Goal Shots, 1
+Difficulty to Cross PC, 3
+Difficulty to Cross SP, 1
+Difficulty to Cross M, 3 4
+Difficulty to Cross RW, 3 1 3 1
+Difficulty to Cross LB, 2 3 4 4
+Teleop High Goal Shots, 1 0 0 1 1
+Teleop Low Goal Shots, 1
+Total Points, 187
+Play Defense, True
+End Game, Hang, Challenge, Breach
+Result, Win
+Notes, pew pew

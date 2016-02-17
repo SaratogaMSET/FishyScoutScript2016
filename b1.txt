@@ -1,0 +1,21 @@
+Team Number, 107
+Match Number, 3
+Scouter Name, Tushie
+Defenses on Field, RP, M, DB, RW, LB
+Spy Zone, False
+Auto Reaches Defense, True
+Auto Crosses Defense, LB
+Auto High Goal Shots, 0 0
+Auto Low Goal Shots, 0
+Difficulty to Cross RP, 4
+Difficulty to Cross M, 3 1
+Difficulty to Cross DB, 2 2
+Difficulty to Cross RW, 2 2 1
+Difficulty to Cross LB, 0 0 3
+Teleop High Goal Shots, 1 0 0 1
+Teleop Low Goal Shots, 1 0
+Total Points, 76
+Play Defense, False
+End Game, Hang, Challenge
+Result, Lose
+Notes, ew
