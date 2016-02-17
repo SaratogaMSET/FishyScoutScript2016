@@ -1,0 +1,21 @@
+Team Number, 7
+Match Number, 38
+Scouter Name, Elsa Frost
+Defenses on Field, RW, M, DB, RT, LB
+Spy Zone, False
+Auto Reaches Defense, True
+Auto Crosses Defense, LB, M
+Auto High Goal Shots, 1 1 1
+Auto Low Goal Shots, 
+Difficulty to Cross RW, 0 0
+Difficulty to Cross M, 0 0 0
+Difficulty to Cross DB, 0
+Difficulty to Cross RT, 0 0 0 0
+Difficulty to Cross LB, 0
+Teleop High Goal Shots, 1 1 1 1
+Teleop Low Goal Shots, 1 1 1
+Total Points, 339
+Play Defense, False
+End Game, Hang, Challenge, Capture, Breach
+Result, Win
+Notes, the Queen rules over all!!

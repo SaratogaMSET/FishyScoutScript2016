@@ -1,0 +1,21 @@
+Team Number, 990
+Match Number, 12
+Scouter Name, Neelus the Untrustworthy
+Defenses on Field, RP, M, PC, RW, LB
+Spy Zone, False
+Auto Reaches Defense, True
+Auto Crosses Defense, M, RW
+Auto High Goal Shots, 
+Auto Low Goal Shots, 1
+Difficulty to Cross RP, 0
+Difficulty to Cross M, 1 1
+Difficulty to Cross PC, 2 2
+Difficulty to Cross RW, 2 2 1
+Difficulty to Cross LB, 0 0 3
+Teleop High Goal Shots, 0 1
+Teleop Low Goal Shots, 1 1
+Total Points, 112
+Play Defense, True
+End Game, Challenge, Breach
+Result, Lose
+Notes, bad at shooting

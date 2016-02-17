@@ -1,0 +1,21 @@
+Team Number, 445
+Match Number, 98
+Scouter Name, Ningning
+Defenses on Field, PC, RP, DB, RT, LB
+Spy Zone, True
+Auto Reaches Defense, False
+Auto Crosses Defense, 
+Auto High Goal Shots, 1 1
+Auto Low Goal Shots, 1
+Difficulty to Cross PC, 3
+Difficulty to Cross RP, 3 4
+Difficulty to Cross DB, 1 0
+Difficulty to Cross RT, 2 3 1
+Difficulty to Cross LB, 0 0 1
+Teleop High Goal Shots, 1 0 1
+Teleop Low Goal Shots, 1 1 1
+Total Points, 148
+Play Defense, False
+End Game, Hang, Challenge
+Result, Win
+Notes, great at shooting!
