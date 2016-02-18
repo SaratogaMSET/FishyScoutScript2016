@@ -16,6 +16,6 @@ Teleop High Goal Shots, 1 0 1
 Teleop Low Goal Shots, 1 1 1
 Total Points, 148
 Play Defense, False
-End Game, Hang, Challenge
+End Game, H, CHA
 Result, Win
 Notes, great at shooting!

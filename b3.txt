@@ -16,6 +16,6 @@ Teleop High Goal Shots, 1 0 0 1 1
 Teleop Low Goal Shots, 1 1
 Total Points, 207
 Play Defense, True
-End Game, Hang, Breach
+End Game, H, B
 Result, Win
 Notes, uh
