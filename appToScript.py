@@ -105,11 +105,43 @@ def generateDict(fileName):
 	i = 0
 	while len(matches) > 0:
 		team = sortByTeam(matches)
-		num = team[0]["Team Number"][0]
+		num = str(team[0]["Team Number"][0])
 		teams[num] = team
 		#return teams
 	return teams
 
+def generateTeamOverall(teams):
+	teamOverall = {} #dictionary to be returned
+	for key in teams: #key is teamnumber
+		highGoalsMade = 0
+		highGoalsTried = 0
+		lowGoalsMade = 0
+		lowGoalsTried = 0
+		defensesAvg = [0, 0, 0, 0, 0, 0, 0, 0, 0] #index in defensesAvg corresponds to index in defenses
+		numAverages = [0, 0, 0, 0, 0, 0, 0, 0, 0] #number of times each average shows up
+		teamOverall[key] = {} #dictionary in each key of teamOverall
+		defenses = ["PC", "CF", "M", "RP", "SP", "DB", "RW", "RT", "LB"] #all possible defenses 
+		for i in range(len(teams[key])): #go through each match for each team
+			highGoalsMade += int(teams[key][i]["Probability of Scoring High Goals"][0])
+			highGoalsTried += int(teams[key][i]["Probability of Scoring High Goals"][2])
+			lowGoalsMade += int(teams[key][i]["Probability of Scoring Low Goals"][0])
+			lowGoalsTried += int(teams[key][i]["Probability of Scoring Low Goals"][2])
+			for j in range(len(defenses)):
+				if teams[key][i].get("Average Difficulty of " + defenses[j]) != None:
+					defensesAvg[j] += teams[key][i]["Average Difficulty of " + defenses[j]]
+					numAverages[j] += 1
+		teamOverall[key]["Overall Probability of Scoring High Goals"] = str(highGoalsMade) + "/" + str(highGoalsTried)
+		teamOverall[key]["Overall Probability of Scoring Low Goals"] = str(lowGoalsMade) + "/" + str(lowGoalsTried)
+		for i in range(len(defensesAvg)):
+			if numAverages[i] != 0:
+				teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = defensesAvg[i]/numAverages[i]
+			else:
+				teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = "N/A"
+	return teamOverall
+
+
+
 generateOneFile() #generates a file with all the appended text files!  NOTE: must delete the file generated to run the code again
 allFile.close()
-print generateDict("oneFile.txt")
+teams = generateDict("oneFile.txt")
+print generateTeamOverall(teams)
