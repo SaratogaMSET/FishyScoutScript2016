@@ -1,0 +1,59 @@
+ ____  _      ____  ____  ____  _  ____    ____  ____  ____    _____ _     _  ____  _____
+/  _ \/ \  /|/  _ \/  __\/  _ \/ \/  _ \  /  _ \/  _ \/  __\  /  __// \ /\/ \/  _ \/  __/
+| / \|| |\ ||| | \||  \/|| / \|| || | \|  | / \|| | \|| | //  | |  _| | ||| || | \||  \  
+| |-||| | \||| |_/||    /| \_/|| || |_/|  | |-||| |_/|| |_\\  | |_//| \_/|| || |_/||  /_ 
+\_/ \|\_/  \|\____/\_/\_\\____/\_/\____/  \_/ \|\____/\____/  \____\\____/\_/\____/\____\
+                                                                                         
+                                           _      ____  ____                             
+                                          / \__/|/  _ \/   _\                            
+                                          | |\/||| / \||  /                              
+                                          | |  ||| |-|||  \__                            
+                                          \_/  \|\_/ \|\____/                            
+                                                                                         
+
+STEPS TO INSTALL ADB FOR ANDROID TO PC TRANSFER USING A MAC OSX MACHINE
+
+1) Open Terminal.
+2) Simply paste this code into terminal. This downloads the homeBrew function into your Terminal.
+	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+3) Now paste this command into your terminal. This downloads the ADB tools themself.
+	brew install android-platform-tools
+4) Congratulations! ADB is now installed on your machine in the smallest way possible.
+5) Now, to get files from the device onto the device, follow the instructions below.
+		
+					GETTING FILES FROM ANDROID TO MAC
+				
+1) To get files from your Android device to your PC,you must first locate you input directory. This is
+   	where your files are stored that you want to transfer to the computer.                         2) Make sure to take note of that input folder. That input folder should not change.
+2) Now, choose a name for your output folder. DO NOT CREATE this folder. Rather, find the path that
+	you would want to place this folder.
+3) Download this file from the Google Drive link below.
+	https://drive.google.com/file/d/0B19KtJDbtbttVTdnNDE3RXVmVkU/view?usp=sharing
+4) Now, Open a Terminal window. Navigate to the location of the file on your computer in Terminal.
+5) Plug your Android Device into the computer now.
+6) Edit the command below to suit your desired input and output directories.
+	
+	Android2PC.sh -i (input directory) -o (output directory)
+
+7) Finally, paste your edited command into the Terminal window. Hit Enter when it prompts you for anything,
+ 	and watch as magic ensues! You have successfully moved files from your Android device to your PC. 
+	Keep in mind that your files will be in the folder which you made you output folder.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
