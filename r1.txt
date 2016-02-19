@@ -1,6 +1,6 @@
 Team Number, 990
 Match Number, 12
-Scouter Name, Neelus the Untrustworthy
+Scouter Name, Neelus
 Defenses on Field, RP, M, PC, RW, LB
 Spy Zone, False
 Auto Reaches Defense, True
@@ -16,6 +16,6 @@ Teleop High Goal Shots, 0 1
 Teleop Low Goal Shots, 1 1
 Total Points, 112
 Play Defense, True
-End Game, Challenge, Breach
+End Game, CHA, B
 Result, Lose
 Notes, bad at shooting

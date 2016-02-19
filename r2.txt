@@ -16,6 +16,6 @@ Teleop High Goal Shots, 1 1 1 1
 Teleop Low Goal Shots, 1 1 1
 Total Points, 339
 Play Defense, False
-End Game, Hang, Challenge, Capture, Breach
+End Game, H, CHA, CAP, B
 Result, Win
 Notes, the Queen rules over all!!
