@@ -24,7 +24,6 @@ def oneTeamoneMatch():
 			lines.append(string)
 			read = False
 
-	
 	match = {} #dictionary; order might not be guaranteed (not the same when printed)
 
 	for i in range(0, 2):
@@ -117,6 +116,7 @@ def generateTeamOverall(teams):
 		highGoalsTried = 0
 		lowGoalsMade = 0
 		lowGoalsTried = 0
+		totalWins = 0
 		defensesAvg = [0, 0, 0, 0, 0, 0, 0, 0, 0] #index in defensesAvg corresponds to index in defenses
 		numAverages = [0, 0, 0, 0, 0, 0, 0, 0, 0] #number of times each average shows up
 		teamOverall[key] = {} #dictionary in each key of teamOverall
@@ -130,8 +130,11 @@ def generateTeamOverall(teams):
 				if teams[key][i].get("Average Difficulty of " + defenses[j]) != None:
 					defensesAvg[j] += teams[key][i]["Average Difficulty of " + defenses[j]]
 					numAverages[j] += 1
+			if teams[key][i]["Result"] == "Win":
+				totalWins += 1
 		teamOverall[key]["Overall Probability of Scoring High Goals"] = str(highGoalsMade) + "/" + str(highGoalsTried)
 		teamOverall[key]["Overall Probability of Scoring Low Goals"] = str(lowGoalsMade) + "/" + str(lowGoalsTried)
+		teamOverall[key]["Proportion of Wins"] = str(totalWins) + "/" + str(len(teams[key]))
 		for i in range(len(defensesAvg)):
 			if numAverages[i] != 0:
 				teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = defensesAvg[i]/numAverages[i]
@@ -139,9 +142,74 @@ def generateTeamOverall(teams):
 				teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = "N/A"
 	return teamOverall
 
+def generateRankings(teamOverall):
+	rankings = {}
+	defenses = ["PC", "CF", "M", "RP", "SP", "DB", "RW", "RT", "LB"]
+	teamNumbers = []
+	for key in teamOverall:
+		teamNumbers.append(key)
+	for i in range(len(defenses)):
+		rankings["Average Difficulty of " + defenses[i]] = {}
+		defenseValues = []
+		for j in range(len(teamNumbers)):
+			defenseValues.append(teamOverall[teamNumbers[j]]["Overall Average Difficulty of " + defenses[i]])
+		bubbleSort(defenseValues, teamNumbers) #sorts teamNumbers based on defenseValues
+		for j in range(len(teamNumbers)):
+			rankings["Average Difficulty of " + defenses[i]][teamNumbers[j]] = j + 1
+	rankings["Overall Probability of Scoring High Goals"] = {}
+	rankings["Overall Probability of Scoring Low Goals"] = {}
+	rankings["Proportion of Wins"] = {}
+	highGoals = []
+	lowGoals = []
+	wins = []
+	for i in range(len(teamNumbers)): #must have a separate loop for each proportion because order of teamNumbers will be messed up
+		proportionHigh = teamOverall[teamNumbers[i]]["Overall Probability of Scoring High Goals"]
+		highGoals.append(float(proportionHigh[0])/int(proportionHigh[2]))		
+	bubbleSort(highGoals, teamNumbers)
+	for j in range(len(teamNumbers)):
+		rankings["Overall Probability of Scoring High Goals"][teamNumbers[j]] = len(teamNumbers) - j
+	for i in range(len(teamNumbers)):
+		proportionLow = teamOverall[teamNumbers[i]]["Overall Probability of Scoring Low Goals"]
+		lowGoals.append(float(proportionLow[0])/int(proportionLow[2]))
+	bubbleSort(lowGoals, teamNumbers)
+	for j in range(len(teamNumbers)):
+		rankings["Overall Probability of Scoring Low Goals"][teamNumbers[j]] = len(teamNumbers) - j
+	for i in range(len(teamNumbers)):
+		proportionWin = teamOverall[teamNumbers[i]]["Proportion of Wins"]
+		wins.append(float(proportionWin[0])/int(proportionWin[2]))
+	bubbleSort(wins, teamNumbers)
+	for j in range(len(teamNumbers)):
+		rankings["Proportion of Wins"][teamNumbers[j]] = len(teamNumbers) - j
+	print rankings
+
+def bubbleSort(values, numbers):
+	for onePass in range(len(values) - 1, 0, -1):
+		for i in range(0, onePass):
+			if values[i + 1] == "N/A":
+				a = values[i + 1]
+				b = numbers[i + 1]
+				values.append(a)
+				numbers.append(b)
+				del(values[i + 1])
+				del(numbers[i + 1])
+				i -= 1
+			elif values[i + 1] < values[i]:
+				tempValue = values[i]
+				tempNumber = numbers[i]
+				values[i] = values[i + 1]
+				numbers[i] = numbers[i + 1]
+				values[i + 1] = tempValue
+				numbers[i + 1] = tempNumber
 
 
+#thing = [3, 5, 6, 2, "N/A", 5, 6, 7, "N/A"]
+#otherThing = [9, 2, 3, 2, 1, 5, 6, 7, 8]
+#bubbleSort(thing, otherThing)
+#print thing
+#print otherThing
 generateOneFile() #generates a file with all the appended text files!  NOTE: must delete the file generated to run the code again
 allFile.close()
 teams = generateDict("oneFile.txt")
-print generateTeamOverall(teams)
+overall = generateTeamOverall(teams)
+print overall
+generateRankings(overall)
