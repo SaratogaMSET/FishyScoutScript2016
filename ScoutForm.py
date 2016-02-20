@@ -6,10 +6,14 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.rl_config import defaultPageSize
 from appToScript import *
+from PIL import Image
+import glob, os
 
-team = '990'
+team = '87'
 teams = generateDict("oneFile.txt")
 
+overall = generateTeamOverall(teams)
+rankings = generateRankings(overall)
 # picture = 'C:\Python27\dozer.jpg'
 b = canvas.Canvas(team + " Scouting Form " + "Page 1.pdf",pagesize = letter)
 c = canvas.Canvas(team + " Scouting Form " + "Page 2.pdf",pagesize = landscape(letter))
@@ -18,7 +22,6 @@ c.setLineWidth(.3)
 width , height = letter
 """Team Number : [] dict Game : Scouter name, name"""
 
-
 # teams ={
 # '649':[{'match':4,'scouter':'Bassil','totalPoints':230},{'match':9,'scouter':'Koh Koh','totalPoints':120},{'match':19,'scouter':'Neelus','totalPoints':420},{'match':30,'scouter':'Kabir','totalPoints':80}],
 # '846':[{'match':3,'scouter':'Bassil','totalPoints':230},{'match':9,'scouter':'Koh Koh','totalPoints':120},{'match':19,'scouter':'Neelus','totalPoints':420},{'match':30,'scouter':'Kabir','totalPoints':80}]
@@ -26,88 +29,41 @@ width , height = letter
 
 numberOfMatches = len(teams[team])
 # print str(teams[team(0['match'])])
+print str(rankings["Proportion of Wins"][team])
+def prettyPicture():
 
+
+	im = Image.open("C:\Python27\dozer.jpg")
+
+	b.drawImage("C:\Python27\dozer.jpg",3*(width/45),height-height/2.2,width=width-6*(width/45),height=height/2.7)
 def topBox():
 	b.line(0,height-height/20,width,height-height/20)
-	b.setFont("Helvetica",20)
-	b.drawString(width/45,height-height/25,"Team " + team + " Scouting Form")
 	b.line(0,height/20,width,height/20)
 # def picture():
 # 	p = open(picture,'w')
 # 	c.drawImage(p, 20, 20)
-def rankings():
-	b.setFont("Helvetica",16)
-	b.drawString(width/45,height-height/2,"Rankings")
-	b.drawString(width/1.6,height/2,"More Rankings")
-	b.setFont("Helvetica",12)
-	#i am not multplying height/35 instead of just subtracting them a bunch of times because multiplying gave some random error
-	b.drawString(width/45,(height/2)-height/35,"Wins")
-	b.drawString(width/3,(height-height/2)-height/35,"2")
-	b.drawString(width/45,(height-height/2)-2*(height/35),"High Goal Percentage:")
-	b.drawString(width/3,(height-height/2)-2*(height/35),"16")
-	b.drawString(width/45,(height-height/2)-3*(height/35),"Portcullis Percentage:")
-	b.drawString(width/3,(height-height/2)-3*(height/35),"16")
-	b.drawString(width/45,(height-height/2)-4*(height/35),"Cheval de Frise Percentage:")
-	b.drawString(width/3,(height-height/2)-4*(height/35),"16")
-	b.drawString(width/45,(height-height/2)-5*(height/35),"Moat Percentage")
-	b.drawString(width/3,(height-height/2)-5*(height/35),"16")
-	b.drawString(width/45,(height-height/2)-6*(height/35),"Ramparts Percentage:")
-	b.drawString(width/3,(height-height/2)-6*(height/35),"16")
-	b.drawString(width/45,(height-height/2)-7*(height/35),"Drawbridge Percentage:" )
-	b.drawString(width/3,(height-height/2)-7*(height/35),"16")
-	b.drawString(width/45,(height-height/2)-8*(height/35),"Sally Port Percentage:")
-	b.drawString(width/3,(height-height/2)-8*(height/35),"16")
-	b.drawString(width/45,(height-height/2)-9*(height/35),"Rock Wall Percentage:")
-	b.drawString(width/3,(height-height/2)-9*(height/35),"16")
-	b.drawString(width/45,(height-height/2)-10*(height/35),"Rough Terrain Percentage:")
-	b.drawString(width/3,(height-height/2)-10*(height/35),"16")
-	b.drawString(width/45,(height-height/2)-11*(height/35),"Low Bar Percentage:")
-	b.drawString(width/3,(height-height/2)-11*(height/35),"16")
-	b.drawString(width/45,(height-height/2)-12*(height/35),"Low Goal Percentage:")
-	b.drawString(width/3,(height-height/2)-12*(height/35),"16")
-	b.drawString(width/1.6,(height-height/2)-(height/35),"Overall")
-	b.drawString(width/1.1,(height-height/2)-height/35,"2")
-	b.drawString(width/1.6,(height-height/2)-2*(height/35),"High Goal Total:")
-	b.drawString(width/1.1,(height-height/2)-2*(height/35),"16")
-	b.drawString(width/1.6,(height-height/2)-3*(height/35),"Portcullis Total:")
-	b.drawString(width/1.1,(height-height/2)-3*(height/35),"16")
-	b.drawString(width/1.6,(height-height/2)-4*(height/35),"Cheval de Frise Total:")
-	b.drawString(width/1.1,(height-height/2)-4*(height/35),"16")
-	b.drawString(width/1.6,(height-height/2)-5*(height/35),"Moat Total:" )
-	b.drawString(width/1.1,(height-height/2)-5*(height/35),"16")
-	b.drawString(width/1.6,(height-height/2)-6*(height/35),"Ramparts Total:")
-	b.drawString(width/1.1,(height-height/2)-6*(height/35),"16")
-	b.drawString(width/1.6,(height-height/2)-7*(height/35),"Drawbridge Total:")
-	b.drawString(width/1.1,(height-height/2)-7*(height/35),"16")
-	b.drawString(width/1.6,(height-height/2)-8*(height/35),"Sally Port Total:")
-	b.drawString(width/1.1,(height-height/2)-8*(height/35),"16")
-	b.drawString(width/1.6,(height-height/2)-9*(height/35),"Rock Wall Total:")
-	b.drawString(width/1.1,(height-height/2)-9*(height/35),"16")
-	b.drawString(width/1.6,(height-height/2)-10*(height/35),"Rough Terrain Total:")
-	b.drawString(width/1.1,(height-height/2)-10*(height/35),"16")
-	b.drawString(width/1.6,(height-height/2)-11*(height/35),"Low Bar Total:")
-	b.drawString(width/1.1,(height-height/2)-11*(height/35),"16")
-	b.drawString(width/1.6,(height-height/2)-12*(height/35),"Low Goal Total:")
-	b.drawString(width/1.1,(height-height/2)-12*(height/35),"16")
+
 def bigData():
 	# win ratio, total hgih shot ratio, low shto ratio, defense avg score lower is better, 
+	b.setFont("Helvetica",20)
+	b.drawString(width/45,height-height/25,"Team " + team + " Scouting Form")
 	b.setFont("Helvetica",16)
 	b.drawString(width/2.25,height/2,"Data!")
+	b.drawString(width/45,(height-height/2)-13*(height/35),"Key:")
 	b.setFont("Helvetica",12)
-	b.drawString(width/2.25,(height-height/2)-(height/35),"16")
-	b.drawString(width/2.25,(height-height/2)-2*(height/35),"16")
-	b.drawString(width/2.25,(height-height/2)-3*(height/35),"16")
-	b.drawString(width/2.25,(height-height/2)-4*(height/35),"16")
-	b.drawString(width/2.25,(height-height/2)-5*(height/35),"16")
-	b.drawString(width/2.25,(height-height/2)-6*(height/35),"16")
-	b.drawString(width/2.25,(height-height/2)-7*(height/35),"16")
-	b.drawString(width/2.25,(height-height/2)-8*(height/35),"16")
-	b.drawString(width/2.25,(height-height/2)-9*(height/35),"16")
-	b.drawString(width/2.25,(height-height/2)-10*(height/35),"16")
-	b.drawString(width/2.25,(height-height/2)-11*(height/35),"16")
-	b.drawString(width/2.25,(height-height/2)-12*(height/35),"16")
-def drawTable():
-	c.rect(height/50,width/50,height-height/25,width-width/25, fill=0)
+	b.drawString(width/45,(height-height/2)-14*(height/35),"All defensive rankings are between 0-3. 0 means nearly flawless, 1 means decent, 2 means struggled, 3 means impossible or nearly impossible, and N/A means not attempted.")
+	b.drawString(width/2.25,(height-height/2)-(height/35),overall[team]['Proportion of Wins'])
+	b.drawString(width/2.25,(height-height/2)-2*(height/35),overall[team]['Overall Probability of Scoring High Goals'])
+	b.drawString(width/2.25,(height-height/2)-3*(height/35),str(overall[team]['Overall Average Difficulty of PC']))
+	b.drawString(width/2.25,(height-height/2)-4*(height/35),str(overall[team]['Overall Average Difficulty of CF']))
+	b.drawString(width/2.25,(height-height/2)-5*(height/35),str(overall[team]['Overall Average Difficulty of M']))
+	b.drawString(width/2.25,(height-height/2)-6*(height/35),str(overall[team]['Overall Average Difficulty of RP']))
+	b.drawString(width/2.25,(height-height/2)-7*(height/35),str(overall[team]['Overall Average Difficulty of SP']))
+	b.drawString(width/2.25,(height-height/2)-8*(height/35),str(overall[team]['Overall Average Difficulty of DB']))
+	b.drawString(width/2.25,(height-height/2)-9*(height/35),str(overall[team]['Overall Average Difficulty of RW']))
+	b.drawString(width/2.25,(height-height/2)-10*(height/35),str(overall[team]['Overall Average Difficulty of RT']))
+	b.drawString(width/2.25,(height-height/2)-11*(height/35),str(overall[team]['Overall Average Difficulty of LB']))
+	b.drawString(width/2.25,(height-height/2)-12*(height/35),str(overall[team]['Overall Probability of Scoring Low Goals']))
 def matchNumber():
 	c.drawString(height/48,width-2*(width/45), 'Match')
 	c.line(height/15,width-width/50,height/15,width/50)
@@ -117,6 +73,8 @@ def matchNumber():
 		c.drawString(height/48,width-(i+1)*(width/22),str(teams[team][i-1]["Match Number"][0]))
 		i+=1
 	c.line(height-height/50,width-i*(width/20),height/50,width-i*(width/20))
+def drawTable():
+	c.rect(height/50,width/50,height-height/25,width-width/25, fill=0)
 def scouterName():
 	c.drawString(height/14.5,width-2*(width/45),"Scouter")
 	c.line(height/7.5,width-width/50,height/7.5,width/50)
@@ -165,6 +123,60 @@ def endGame():
 # 	while i<=numberOfMatches:
 # 		c.drawString(height/2.235,width-(i+1)*(width/22),"4")
 # 		i+=1				
+def showRankings():
+	global rankings
+	b.setFont("Helvetica",16)
+	b.drawString(width/45,height-height/2,"Rankings")
+	b.drawString(width/1.6,height/2,"More Rankings")
+	b.setFont("Helvetica",12)
+	b.drawString(width/45,(height/2)-height/35,"Wins")
+	b.drawString(width/3,height/2-(height/35),str(rankings["Proportion of Wins"][team]))
+	b.drawString(width/45,(height-height/2)-2*(height/35),"High Goal Percentage:")
+	b.drawString(width/3,(height-height/2)-2*(height/35),str(rankings["Overall Probability of Scoring High Goals"][team]))
+	b.drawString(width/45,(height-height/2)-3*(height/35),"Portcullis Percentage:")
+	b.drawString(width/3,(height-height/2)-3*(height/35),str(rankings["Average Difficulty of PC"][team]))
+	b.drawString(width/45,(height-height/2)-4*(height/35),"Cheval de Frise Percentage:")
+	b.drawString(width/3,(height-height/2)-4*(height/35),str(rankings["Average Difficulty of CF"][team]))
+	b.drawString(width/45,(height-height/2)-5*(height/35),"Moat Percentage")
+	b.drawString(width/3,(height-height/2)-5*(height/35),str(rankings["Average Difficulty of M"][team]))
+	b.drawString(width/45,(height-height/2)-6*(height/35),"Ramparts Percentage:")
+	b.drawString(width/3,(height-height/2)-6*(height/35),str(rankings["Average Difficulty of RP"][team]))
+	b.drawString(width/45,(height-height/2)-7*(height/35),"Drawbridge Percentage:" )
+	b.drawString(width/3,(height-height/2)-7*(height/35),str(rankings["Average Difficulty of SP"][team]))
+	b.drawString(width/45,(height-height/2)-8*(height/35),"Sally Port Percentage:")
+	b.drawString(width/3,(height-height/2)-8*(height/35),str(rankings["Average Difficulty of DB"][team]))
+	b.drawString(width/45,(height-height/2)-9*(height/35),"Rock Wall Percentage:")
+	b.drawString(width/3,(height-height/2)-9*(height/35),str(rankings["Average Difficulty of RW"][team]))
+	b.drawString(width/45,(height-height/2)-10*(height/35),"Rough Terrain Percentage:")
+	b.drawString(width/3,(height-height/2)-10*(height/35),str(rankings["Average Difficulty of RT"][team]))
+	b.drawString(width/45,(height-height/2)-11*(height/35),"Low Bar Percentage:")
+	b.drawString(width/3,(height-height/2)-11*(height/35),str(rankings["Average Difficulty of LB"][team]))
+	b.drawString(width/45,(height-height/2)-12*(height/35),"Low Goal Percentage:")
+	b.drawString(width/3,(height-height/2)-12*(height/35),str(rankings["Overall Probability of Scoring Low Goals"][team]))
+	b.drawString(width/1.6,(height-height/2)-(height/35),"Overall")
+	b.drawString(width/1.1,(height-height/2)-height/35,"2")
+	b.drawString(width/1.6,(height-height/2)-2*(height/35),"High Goal Total:")
+	b.drawString(width/1.1,(height-height/2)-2*(height/35),"16")
+	b.drawString(width/1.6,(height-height/2)-3*(height/35),"Portcullis Total:")
+	b.drawString(width/1.1,(height-height/2)-3*(height/35),"16")
+	b.drawString(width/1.6,(height-height/2)-4*(height/35),"Cheval de Frise Total:")
+	b.drawString(width/1.1,(height-height/2)-4*(height/35),"16")
+	b.drawString(width/1.6,(height-height/2)-5*(height/35),"Moat Total:" )
+	b.drawString(width/1.1,(height-height/2)-5*(height/35),"16")
+	b.drawString(width/1.6,(height-height/2)-6*(height/35),"Ramparts Total:")
+	b.drawString(width/1.1,(height-height/2)-6*(height/35),"16")
+	b.drawString(width/1.6,(height-height/2)-7*(height/35),"Drawbridge Total:")
+	b.drawString(width/1.1,(height-height/2)-7*(height/35),"16")
+	b.drawString(width/1.6,(height-height/2)-8*(height/35),"Sally Port Total:")
+	b.drawString(width/1.1,(height-height/2)-8*(height/35),"16")
+ 	b.drawString(width/1.6,(height-height/2)-9*(height/35),"Rock Wall Total:")
+ 	b.drawString(width/1.1,(height-height/2)-9*(height/35),"16")
+	b.drawString(width/1.6,(height-height/2)-10*(height/35),"Rough Terrain Total:")
+	b.drawString(width/1.1,(height-height/2)-10*(height/35),"16")
+	b.drawString(width/1.6,(height-height/2)-11*(height/35),"Low Bar Total:")
+	b.drawString(width/1.1,(height-height/2)-11*(height/35),"16")
+	b.drawString(width/1.6,(height-height/2)-12*(height/35),"Low Goal Total:")
+	b.drawString(width/1.1,(height-height/2)-12*(height/35),"16")
 def lowBar():
 	c.drawString(height/1.99,width-2*(width/45),"Low Bar")
 	c.line(height/1.77,width-width/50,height/1.77,width/50)
@@ -320,7 +332,6 @@ def notes():
 
 bigData()
 notes()
-rankings()
 # hang()
 topBox()
 defense()
@@ -345,6 +356,8 @@ rough()
 # myPoints()
 # oppPoints()
 endGame()
+showRankings()
+prettyPicture()
 # picture()
 totalPoints()
 scouterName()
