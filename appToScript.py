@@ -137,8 +137,7 @@ def generateTeamOverall(teams):
 		teamOverall[key]["Proportion of Wins"] = str(totalWins) + "/" + str(len(teams[key]))
 		for i in range(len(defensesAvg)):
 			if numAverages[i] != 0:
-				teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = round(defensesAvg[i]/numAverages[i], 2)
-				#teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = round(teamOverall[key]["Overall Average Difficulty of " + defenses[i]],-2)
+				teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = defensesAvg[i]/numAverages[i]
 			else:
 				teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = "N/A"
 	return teamOverall
@@ -181,7 +180,7 @@ def generateRankings(teamOverall):
 	bubbleSort(wins, teamNumbers)
 	for j in range(len(teamNumbers)):
 		rankings["Proportion of Wins"][teamNumbers[j]] = len(teamNumbers) - j
-	return rankings
+	print rankings
 
 def bubbleSort(values, numbers):
 	for onePass in range(len(values) - 1, 0, -1):
