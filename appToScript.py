@@ -137,7 +137,8 @@ def generateTeamOverall(teams):
 		teamOverall[key]["Proportion of Wins"] = str(totalWins) + "/" + str(len(teams[key]))
 		for i in range(len(defensesAvg)):
 			if numAverages[i] != 0:
-				teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = defensesAvg[i]/numAverages[i]
+				teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = round(defensesAvg[i]/numAverages[i], 2)
+				#teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = round(teamOverall[key]["Overall Average Difficulty of " + defenses[i]],-2)
 			else:
 				teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = "N/A"
 	return teamOverall
