@@ -1,0 +1,63 @@
+ ____  _      ____  ____  ____  _  ____    ____  ____  ____    _____ _     _  ____  _____
+/  _ \/ \  /|/  _ \/  __\/  _ \/ \/  _ \  /  _ \/  _ \/  __\  /  __// \ /\/ \/  _ \/  __/
+| / \|| |\ ||| | \||  \/|| / \|| || | \|  | / \|| | \|| | //  | |  _| | ||| || | \||  \  
+| |-||| | \||| |_/||    /| \_/|| || |_/|  | |-||| |_/|| |_\\  | |_//| \_/|| || |_/||  /_ 
+\_/ \|\_/  \|\____/\_/\_\\____/\_/\____/  \_/ \|\____/\____/  \____\\____/\_/\____/\____\
+                                                                                         
+                   _      _  _      ____  ____  _      ____                              
+                  / \  /|/ \/ \  /|/  _ \/  _ \/ \  /|/ ___\                             
+                  | |  ||| || |\ ||| | \|| / \|| |  |||    \                             
+                  | |/\||| || | \||| |_/|| \_/|| |/\||\___ |                             
+                  \_/  \|\_/\_/  \|\____/\____/\_/  \|\____/      
+
+
+STEPS TO INSTALL ADB FOR ANDROID TO PC TRANSFER USING A WINDOWS OS MACHINE
+
+1) Open your favorite Internet Browser.
+2) Download the file from the following link by clicking on the link below.
+	https://drive.google.com/file/d/0B19KtJDbtbttUEllSHhGTENJbXc/view?usp=sharing
+3) Run through the installation of the program. Do not change any settings as you install. Make sure to create a chortcut on the Desktop
+	as you go through this.
+4) Once the installation is done, go ahead and double click on the shortcut created on the Desktop. 	This should open a command window.
+5) Congratulations! ADB is now installed on your machine in the smallest way possible.
+6) Now, to get files from the device onto the device, follow the instructions below.
+		
+					GETTING FILES FROM ANDROID TO PC	
+				
+1) To get files from your Android device to your PC,you must first locate you input directory. This is
+   	where your files are stored that you want to transfer to the computer.                         2) Make sure to take note of that input folder. That input folder should not change.
+3) Now, choose a name for your output folder. DO NOT CREATE this folder. Rather, find the path that
+	you would want to place this folder.
+4) Download this file from the Google Drive link below.
+	https://drive.google.com/file/d/0B19KtJDbtbttVF9zZTZ2cThuNlU/view?usp=sharing
+5) Now, find the folder where the program's shortcut targets to. Go to this folder. If you installed 	this program on a x64 system, it will be located in the following location.
+		C:\Program Files (x86)\Minimal ADB and Fastboot
+	On a x86 system, the folder will be located in the following location.
+		C:\Program Files\Minimal ADB and Fastboot
+6) Place the downloaded '.bat' file, in this directory. Make sure it is there, otherwise the program 	will not work.
+7) Now, go back to the Command Prompt Window opened by the shortcut of the program you installed.
+8) Plug your Android Device into the computer now.
+9) Edit the command below to suit your desired input and output directories.
+	
+	Android2PC.bat -i (input directory) -o (output directory) -a
+
+10) Finally, paste your edited command into the Command Prompt Window. Hit Enter when it prompts you for anything, and watch as magic ensues! You have successfully moved files from your Android device to your PC. Keep in mind that your files will be in the folder which you made you output folder.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

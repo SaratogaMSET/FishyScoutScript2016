@@ -180,9 +180,57 @@ def generateRankings(teamOverall):
 	bubbleSort(wins, teamNumbers)
 	for j in range(len(teamNumbers)):
 		rankings["Proportion of Wins"][teamNumbers[j]] = len(teamNumbers) - j
-	print rankings
+	return rankings
 
-def bubbleSort(values, numbers):
+def generateTotals(teams, teamOverall):
+	defenseTotals = {}
+	for key in teams:
+		defenseTotals[key] = {}
+		numOfSuccesses = [0, 0, 0, 0, 0, 0, 0, 0, 0] #number of times each average shows up
+		defenses = ["PC", "CF", "M", "RP", "SP", "DB", "RW", "RT", "LB"] #all possible defenses 
+		for i in range(len(teams[key])): #go through each match for each team
+			for j in range(len(defenses)):
+				if teams[key][i].get("Difficulty to Cross " + defenses[j]) != None:
+					for k in range(len(teams[key][i]["Difficulty to Cross " + defenses[j]])):
+						if teams[key][i]["Difficulty to Cross " + defenses[j]][k] < 3:
+							numOfSuccesses[j] += 1
+		for i in range(len(defenses)):
+			defenseTotals[key]["Total Successes to Cross " + defenses[i]] = numOfSuccesses[i]
+		defenseTotals[key]["Total Successes of High Goals"] = int(teamOverall[key]["Overall Probability of Scoring High Goals"][0])
+		defenseTotals[key]["Total Successes of Low Goals"] = int(teamOverall[key]["Overall Probability of Scoring Low Goals"][0])
+	return defenseTotals
+
+def generateTotalsRankings(defenseTotals):
+	totalsRankings = {}
+	defenses = ["PC", "CF", "M", "RP", "SP", "DB", "RW", "RT", "LB"]
+	teamNumbers = []
+	for key in defenseTotals:
+		teamNumbers.append(key)
+	for i in range(len(defenses)):
+		totalsRankings["Total Successes to Cross " + defenses[i]] = {}
+		defenseTotalValues = []
+		for j in range(len(teamNumbers)):
+			defenseTotalValues.append(defenseTotals[teamNumbers[j]]["Total Successes to Cross " + defenses[i]])
+		bubbleSort(defenseTotalValues, teamNumbers) #sorts teamNumbers based on defenseValues
+		for j in range(len(teamNumbers)):
+			totalsRankings["Total Successes to Cross " + defenses[i]][teamNumbers[j]] = len(teamNumbers) - j
+	totalsRankings["Total Successes of High Goals"] = {}
+	totalsRankings["Total Successes of Low Goals"] = {}
+	highGoals = []
+	lowGoals = []
+	for i in range(len(teamNumbers)): #must have a separate loop for each proportion because order of teamNumbers will be messed up
+		highGoals.append(defenseTotals[teamNumbers[i]]["Total Successes of High Goals"])		
+	bubbleSort(highGoals, teamNumbers)
+	for j in range(len(teamNumbers)):
+		totalsRankings["Total Successes of High Goals"][teamNumbers[j]] = len(teamNumbers) - j
+	for i in range(len(teamNumbers)):
+		lowGoals.append(defenseTotals[teamNumbers[i]]["Total Successes of Low Goals"])
+	bubbleSort(lowGoals, teamNumbers)
+	for j in range(len(teamNumbers)):
+		totalsRankings["Total Successes of Low Goals"][teamNumbers[j]] = len(teamNumbers) - j
+	return totalsRankings
+
+def bubbleSort(values, numbers): #smallest to biggest
 	for onePass in range(len(values) - 1, 0, -1):
 		for i in range(0, onePass):
 			if values[i + 1] == "N/A":
@@ -200,7 +248,35 @@ def bubbleSort(values, numbers):
 				numbers[i] = numbers[i + 1]
 				values[i + 1] = tempValue
 				numbers[i + 1] = tempNumber
-
+#returns the average of all 3 teams for each defense and ranks them from highest to lowest(worst -> best)
+def compareDefenses3(overallTeam1, overallTeam2, overallTeam3, threeTeamNumbers): #team numbers must be organized in order of overalls
+	defensesAverage3 = {}
+	defenses = ["PC", "CF", "M", "RP", "SP", "DB", "RW", "RT", "LB"]
+	allianceRankings = []
+	for i in range(len(defenses)):
+		sumOfAverages = 0
+		repeat = "Overall Average Difficulty of "
+		numbers = [overallTeam1[repeat + defenses[i]], overallTeam2[repeat + defenses[i]], overallTeam3[repeat + defenses[i]]]
+		numOfTimes = 0
+		noAttempt = []
+		for j in range(len(numbers)):
+			if numbers[j] != "N/A":
+				sumOfAverages += numbers[j]
+				numOfTimes += 1
+			else:
+				noAttempt.append(threeTeamNumbers[j])
+		if numOfTimes != 0:
+			defensesAverage3["Alliance Average of " + defenses[i]] = str(sumOfAverages/numOfTimes)
+		elif numOfTimes == 0:
+			defensesAverage3["Alliance Average of " + defenses[i]] = "N/A"
+		allianceRankings.append(defensesAverage3["Alliance Average of " + defenses[i]])
+		if len(noAttempt) != 0:
+					defensesAverage3["Alliance Average of " + defenses[i]] += "; Team(s) " + str(noAttempt) + " did not attempt."
+	bubbleSort(allianceRankings, defenses)
+	defensesAverage3["Rankings of Defenses: Worst to Best"] = {}
+	for i in range(len(defenses)):
+		defensesAverage3["Rankings of Defenses: Worst to Best"][defenses[i]] = len(defenses) - i
+	return defensesAverage3
 
 #thing = [3, 5, 6, 2, "N/A", 5, 6, 7, "N/A"]
 #otherThing = [9, 2, 3, 2, 1, 5, 6, 7, 8]
@@ -211,5 +287,19 @@ generateOneFile() #generates a file with all the appended text files!  NOTE: mus
 allFile.close()
 teams = generateDict("oneFile.txt")
 overall = generateTeamOverall(teams)
-print overall
-generateRankings(overall)
+#print overall
+#generateRankings(overall)
+#totals = generateTotals(teams, overall)
+#print totals
+#print generateTotalsRankings(totals)
+keys = []
+for key in overall:
+	keys.append(key)
+print keys[0]
+print overall[keys[0]]
+print keys[1]
+print overall[keys[1]]
+print keys[2]
+print overall[keys[2]]
+teamNumbers = [keys[0], keys[1], keys[2]]
+print compareDefenses3(overall[keys[0]], overall[keys[1]], overall[keys[2]], teamNumbers) 
