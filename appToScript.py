@@ -117,6 +117,7 @@ def generateTeamOverall(teams):
 		lowGoalsMade = 0
 		lowGoalsTried = 0
 		totalWins = 0
+		totalPoints = 0
 		defensesAvg = [0, 0, 0, 0, 0, 0, 0, 0, 0] #index in defensesAvg corresponds to index in defenses
 		numAverages = [0, 0, 0, 0, 0, 0, 0, 0, 0] #number of times each average shows up
 		teamOverall[key] = {} #dictionary in each key of teamOverall
@@ -135,9 +136,11 @@ def generateTeamOverall(teams):
 		teamOverall[key]["Overall Probability of Scoring High Goals"] = str(highGoalsMade) + "/" + str(highGoalsTried)
 		teamOverall[key]["Overall Probability of Scoring Low Goals"] = str(lowGoalsMade) + "/" + str(lowGoalsTried)
 		teamOverall[key]["Proportion of Wins"] = str(totalWins) + "/" + str(len(teams[key]))
+		teamOverall[key]["Points"] = str(teams[key][i]["Total Points"])
 		for i in range(len(defensesAvg)):
 			if numAverages[i] != 0:
-				teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = defensesAvg[i]/numAverages[i]
+				teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = round(defensesAvg[i]/numAverages[i], 2)
+				#teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = round(teamOverall[key]["Overall Average Difficulty of " + defenses[i]],-2)
 			else:
 				teamOverall[key]["Overall Average Difficulty of " + defenses[i]] = "N/A"
 	return teamOverall
@@ -330,7 +333,6 @@ print overall["107"]
 #print overall
 #generateRankings(overall)
 #totals = generateTotals(teams, overall)
-#print totals
 #print generateTotalsRankings(totals)
 #keys = []
 #for key in overall:
