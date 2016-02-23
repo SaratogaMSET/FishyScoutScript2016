@@ -249,7 +249,7 @@ def bubbleSort(values, numbers): #smallest to biggest
 				values[i + 1] = tempValue
 				numbers[i + 1] = tempNumber
 #returns the average of all 3 teams for each defense and ranks them from highest to lowest(worst -> best)
-def compareDefenses3(overallTeam1, overallTeam2, overallTeam3, threeTeamNumbers): #team numbers must be organized in order of overalls
+def compareDefenses3(overallTeam1, overallTeam2, overallTeam3, threeTeamNumbers): #team numbers must be organized in order of overalls; what basil rejected
 	defensesAverage3 = {}
 	defenses = ["PC", "CF", "M", "RP", "SP", "DB", "RW", "RT", "LB"]
 	allianceRankings = []
@@ -271,12 +271,49 @@ def compareDefenses3(overallTeam1, overallTeam2, overallTeam3, threeTeamNumbers)
 			defensesAverage3["Alliance Average of " + defenses[i]] = "N/A"
 		allianceRankings.append(defensesAverage3["Alliance Average of " + defenses[i]])
 		if len(noAttempt) != 0:
-					defensesAverage3["Alliance Average of " + defenses[i]] += "; Team(s) " + str(noAttempt) + " did not attempt."
+			defensesAverage3["Alliance Average of " + defenses[i]] += "; Team(s) " + str(noAttempt) + " did not attempt."
 	bubbleSort(allianceRankings, defenses)
 	defensesAverage3["Rankings of Defenses: Worst to Best"] = {}
 	for i in range(len(defenses)):
 		defensesAverage3["Rankings of Defenses: Worst to Best"][defenses[i]] = len(defenses) - i
 	return defensesAverage3
+
+def compareDefenseCategory(team1, team2, team3, defense1, defense2, overall):
+	defenseCategory = {}
+	sumOfAverages1 = 0
+	sumOfAverages2 = 0
+	repeat = "Overall Average Difficulty of "
+	numbers1 = [overall[team1][repeat + defense1], overall[team2][repeat + defense1], overall[team3][repeat + defense1]]
+	numbers2 = [overall[team1][repeat + defense2], overall[team2][repeat + defense2], overall[team3][repeat + defense2]]
+	numOfTimes1 = 0
+	numOfTimes2 = 0
+	noAttempt1 = []
+	noAttempt2 = []
+	teamNumbers = [team1, team2, team3]
+	for i in range(len(numbers1)):
+		if numbers1[i] != "N/A":
+			sumOfAverages1 += numbers1[i]
+			numOfTimes1 += 1
+		elif numbers1[i] == "N/A":
+			noAttempt1.append(teamNumbers[i])
+		if numbers2[i] != "N/A":
+			sumOfAverages2 += numbers2[i]
+			numOfTimes2 += 1
+		elif numbers2[i] == "N/A":
+				noAttempt2.append(teamNumbers[i])
+	if numOfTimes1 != 0:
+		defenseCategory["Alliance Average of " + defense1] = str(sumOfAverages1/numOfTimes1)
+	elif numOfTimes1 == 0:
+		defenseCategory["Alliance Average of " + defense1] = "N/A"
+	if numOfTimes2 != 0:
+		defenseCategory["Alliance Average of " + defense2] = str(sumOfAverages2/numOfTimes2)
+	elif numOfTimes2 == 0:
+		defenseCategory["Alliance Average of " + defense2] = "N/A"
+	if len(noAttempt1) != 0:
+		defenseCategory["Alliance Average of " + defense1] += "; Team(s) " + str(noAttempt1) + " did not attempt."
+	if len(noAttempt2) != 0:
+		defenseCategory["Alliance Average of " + defense2] += "; Team(s) " + str(noAttempt2) + " did not attempt."
+	return defenseCategory
 
 #thing = [3, 5, 6, 2, "N/A", 5, 6, 7, "N/A"]
 #otherThing = [9, 2, 3, 2, 1, 5, 6, 7, 8]
@@ -287,19 +324,23 @@ generateOneFile() #generates a file with all the appended text files!  NOTE: mus
 allFile.close()
 teams = generateDict("oneFile.txt")
 overall = generateTeamOverall(teams)
+print overall["7"]
+print overall["990"]
+print overall["107"]
 #print overall
 #generateRankings(overall)
 #totals = generateTotals(teams, overall)
 #print totals
 #print generateTotalsRankings(totals)
-keys = []
-for key in overall:
-	keys.append(key)
-print keys[0]
-print overall[keys[0]]
-print keys[1]
-print overall[keys[1]]
-print keys[2]
-print overall[keys[2]]
-teamNumbers = [keys[0], keys[1], keys[2]]
-print compareDefenses3(overall[keys[0]], overall[keys[1]], overall[keys[2]], teamNumbers) 
+#keys = []
+#for key in overall:
+#	keys.append(key)
+#print keys[0]
+#print overall[keys[0]]
+#print keys[1]
+#print overall[keys[1]]
+#print keys[2]
+#print overall[keys[2]]
+#teamNumbers = [keys[0], keys[1], keys[2]]
+#print compareDefenses3(overall[keys[0]], overall[keys[1]], overall[keys[2]], teamNumbers) 
+print compareDefenseCategory("7", "990", "107", "PC", "LB", overall)
