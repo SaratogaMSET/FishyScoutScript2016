@@ -156,8 +156,8 @@ def showRankings():
 	b.drawString(width/3,(height-height/2)-11*(height/35),str(rankings["Average Difficulty of LB"][team]))
 	b.drawString(width/45,(height-height/2)-12*(height/35),"Low Goal Percentage:")
 	b.drawString(width/3,(height-height/2)-12*(height/35),str(rankings["Overall Probability of Scoring Low Goals"][team]))
-	# b.drawString(width/1.6,(height-height/2)-(height/35),"Overall")
-	# b.drawString(width/1.1,(height-height/2)-height/35,)
+	b.drawString(width/1.6,(height-height/2)-(height/35),"Points")
+	b.drawString(width/1.1,(height-height/2)-height/35,)
 	b.drawString(width/1.6,(height-height/2)-2*(height/35),"High Goal Total:")
 	b.drawString(width/1.1,(height-height/2)-2*(height/35),str(totalsRankings["Total Successes of High Goals"][team]))
 	b.drawString(width/1.6,(height-height/2)-3*(height/35),"Portcullis Total:")
@@ -319,6 +319,7 @@ def defense():
 	while i<=numberOfMatches:
 		c2.drawString(height/1.93,width-(i+1)*(width/22),str(teams[team][i-1]["Play Defense"]))
 		i+=1
+
 # def hang():
 # 	c2.drawString(height/1.71,width-2*(width/45),"Hang")
 # 	c2.line(height/1.58,width-width/50,height/1.58,width/50)
@@ -326,6 +327,15 @@ def defense():
 # 	while i<=numberOfMatches:
 # 		c2.drawString(height/1.71,width-(i+1)*(width/22),"False")
 # 		i+=1
+team1 = '649'
+team2 = '880'
+team3 = '770'
+defense1 = 'PC'
+defense2 = 'SP'
+overall
+overall[]
+overall[1st defense + "average of:"][team1]
+teamNumber
 def notes():
 	c2.drawString(height/1.725,width-2*(width/45),"Notes")
 	i=1
@@ -354,14 +364,9 @@ draw()
 sally()
 rock()
 rough()
-#allianceTotalCapture()
-#allianceCapture()
-# myPoints()
-# oppPoints()
 endGame()
 showRankings()
 prettyPicture()
-# picture()
 totalPoints()
 scouterName()
 matchNumber()
