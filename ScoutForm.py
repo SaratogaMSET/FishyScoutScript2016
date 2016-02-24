@@ -30,6 +30,7 @@ width , height = letter
 # '846':[{'match':3,'scouter':'Bassil','totalPoints':230},{'match':9,'scouter':'Koh Koh','totalPoints':120},{'match':19,'scouter':'Neelus','totalPoints':420},{'match':30,'scouter':'Kabir','totalPoints':80}]
 # }
 
+
 numberOfMatches = len(teams[team])
 # print str(teams[team(0['match'])])
 print str(rankings["Proportion of Wins"][team])
@@ -56,6 +57,7 @@ def bigData():
 	b.setFont("Helvetica",12)
 	b.drawString(width/45,(height/2)-14*(height/35),"All defensive rankings are between 0-3. 0 means nearly flawless, 1 means decent,")
 	b.drawString(width/45,(height/2)-15*(height/35),"2 means struggled, 3 means impossible or nearly impossible, and N/A means not attempted.")
+	b.drawString(width/2.25,(height-height/2)-(height/35),str(totals[team]["Total Alliance Points"]))
 	b.drawString(width/2.25,(height-height/2)-2*(height/35),overall[team]['Overall Probability of Scoring High Goals'])
 	b.drawString(width/2.25,(height-height/2)-3*(height/35),str(overall[team]['Overall Average Difficulty of PC']))
 	b.drawString(width/2.25,(height-height/2)-4*(height/35),str(overall[team]['Overall Average Difficulty of CF']))
@@ -156,8 +158,8 @@ def showRankings():
 	b.drawString(width/3,(height-height/2)-11*(height/35),str(rankings["Average Difficulty of LB"][team]))
 	b.drawString(width/45,(height-height/2)-12*(height/35),"Low Goal Percentage:")
 	b.drawString(width/3,(height-height/2)-12*(height/35),str(rankings["Overall Probability of Scoring Low Goals"][team]))
-	b.drawString(width/1.6,(height-height/2)-(height/35),"Points")
-	b.drawString(width/1.1,(height-height/2)-height/35,)
+	b.drawString(width/1.6,(height-height/2)-height/35,"Match Point Average")
+	b.drawString(width/1.1,(height/2)-height/35,str(rankings["Average Alliance Match Points"][team]))
 	b.drawString(width/1.6,(height-height/2)-2*(height/35),"High Goal Total:")
 	b.drawString(width/1.1,(height-height/2)-2*(height/35),str(totalsRankings["Total Successes of High Goals"][team]))
 	b.drawString(width/1.6,(height-height/2)-3*(height/35),"Portcullis Total:")
@@ -332,10 +334,10 @@ team2 = '880'
 team3 = '770'
 defense1 = 'PC'
 defense2 = 'SP'
-overall
-overall[]
-overall[1st defense + "average of:"][team1]
-teamNumber
+# overall
+# overall[]
+# overall[1st defense + "average of:"][team1]
+# teamNumber
 def notes():
 	c2.drawString(height/1.725,width-2*(width/45),"Notes")
 	i=1
@@ -378,3 +380,4 @@ c.showPage()
 c.save()
 c2.showPage()
 c2.save()
+print str(totals[team]["Total Alliance Points"])

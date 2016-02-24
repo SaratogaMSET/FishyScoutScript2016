@@ -66,7 +66,7 @@ def oppTeamOne():
 	c.setFont("Helvetica",14)
 	if(ourAlliance == 'Blue'):
 		c.drawString(width/4+width/45,height-height/13-15*(height/30), red1)
-		c.drawString(width/4+width/45,height-height/13-16*(height/30),overall[red1]["Points"].strip('[]'))
+		c.drawString(width/4+width/45,height-height/13-16*(height/30),str(overall[red1]["Overall Average of Alliance Points"].strip('[]')))
 		c.drawString(width/4+width/45,height-height/13-17*(height/30),overall[red1]["Overall Probability of Scoring High Goals"].strip('[]'))
 		c.drawString(width/4+width/45,height-height/13-18*(height/30),overall[red1]["Overall Probability of Scoring Low Goals"].strip('[]'))
 	else:
@@ -193,8 +193,116 @@ def suggestionBox():
 	c.rect(width/4+26,5,100,100, stroke=1, fill=0)
 	c.rect(width/2+26,5,100,100, stroke=1, fill=0)
 	c.rect(width-width/4+26,5,100,100, stroke=1, fill=0)
+def writeBoxes():
+	c.setFont("Helvetica",12)
+	if(ourAlliance=='Blue'):
+		defenseA = compareDefenseCategory(red1, red2, red3, "PC", "CF", overall)
+	else:
+		defenseA = compareDefenseCategory(blue1, blue2, blue3, 'PC', "CF", overall)
+	if(ourAlliance=='Blue'):
+		defenseB = compareDefenseCategory(red1, red2, red3, 'M', 'RP', overall)
+	else:
+		defenseB = compareDefenseCategory(blue1, blue2, blue3, 'M', 'RP', overall)
+	if(ourAlliance=='Blue'):
+		defenseC = compareDefenseCategory(red1, red2, red3, 'DB', 'SP', overall)
+	else:
+		defenseC = compareDefenseCategory(blue1, blue2, blue3, 'DB', 'SP', overall)
+	if(ourAlliance=='Blue'):
+		defenseD = compareDefenseCategory(red1, red2, red3, 'RW', 'RT', overall)
+	else:
+		defenseD = compareDefenseCategory(blue1, blue2, blue3, 'RW', 'RT', overall)
+	print str(defenseA)
+	if(defenseA['Alliance Average of CF'] != 'N/A' and defenseA['Alliance Average of PC'] != 'N/A'):
+		if(defenseA['Alliance Average of CF'] > defenseA['Alliance Average of PC']):
+			suggestedA = 'CF'
+		elif(defenseA['Alliance Average of CF'] < defenseA['Alliance Average of PC']):
+			suggestedA = 'PC'
+		else:
+			suggestedA = 'Tie'
+	else:
+		suggestedA = 'Not enough data.'
 
+	c.drawString(28,90,'Suggested:')
+	c.drawString(28,75,suggestedA)
+	if(defenseA['Did not attempt PC']):
+		c.drawString(28,60,'PC no attempt:')
+		c.drawString(28,45,defenseA['Did not attempt PC'].strip('[]'))
+	if(defenseA['Did not attempt CF']):
+		c.drawString(28,30,'CF no attempt:')
+		c.drawString(28,15,defenseA['Did not attempt CF'].strip('[]'))
+	if(defenseB['Alliance Average of M'] != 'N/A' and defenseB['Alliance Average of RP'] != 'N/A'):
+		if(defenseB['Alliance Average of M'] > defenseB['Alliance Average of RP']):
+			suggestedA = 'M'
+		elif(defenseB['Alliance Average of M'] < defenseB['Alliance Average of RP']):
+			suggestedB = 'RP'
+		else:
+			suggestedB = 'Tie'
+	else:
+		suggestedB = 'Not enough data.'
 
+	c.drawString(width/4+28,90,'Suggested:')
+	c.drawString(width/4+28,75,suggestedB)
+	if(defenseB['Did not attempt M']):
+		c.drawString(width/4+28,60,'M no attempt:')
+		c.drawString(width/4+28,45,defenseB['Did not attempt M'].strip('[]'))
+	if(defenseB['Did not attempt RP']):
+		c.drawString(width/4+28,30,'RP no attempt:')
+		c.drawString(width/4+28,15,defenseB['Did not attempt RP'].strip('[]'))
+	if(defenseC['Alliance Average of DB'] != 'N/A' and defenseC['Alliance Average of SP'] != 'N/A'):
+		if(defenseC['Alliance Average of DB'] > defenseC['Alliance Average of SP']):
+			suggestedC = 'DB'
+		elif(defenseC['Alliance Average of DB'] < defenseC['Alliance Average of SP']):
+			suggestedC = 'SP'
+		else:
+			suggestedC = 'Tie'
+	else:
+		suggestedC = 'Not enough data.'
+
+	c.drawString(width/2+28,90,'Suggested:')
+	c.drawString(width/2+28,75,suggestedA)
+	if(defenseC['Did not attempt DB']):
+		c.drawString(width/2+28,60,'DB no attempt:')
+		c.drawString(width/2+28,45,defenseC['Did not attempt DB'].strip('[]'))
+	if(defenseC['Did not attempt SP']):
+		c.drawString(width/2+28,30,'SP no attempt:')
+		c.drawString(width/2+28,15,defenseC['Did not attempt SP'].strip('[]'))
+	if(defenseD['Alliance Average of RW'] != 'N/A' and defenseD['Alliance Average of RT'] != 'N/A'):
+		if(defenseD['Alliance Average of RW'] > defenseD['Alliance Average of RT']):
+			suggestedD = 'RW'
+		elif(defenseD['Alliance Average of RW'] < defenseD['Alliance Average of RT']):
+			suggestedD = 'RT'
+		else:
+			suggestedD = 'Tie'
+	else:
+		suggestedD = 'Not enough data.'
+
+	c.drawString(width-width/4+28,90,'Suggested:')
+	c.drawString(width-width/4+28,75,suggestedD)
+	if(defenseD['Did not attempt RW']):
+		c.drawString(width-width/4+28,60,'RW no attempt:')
+		c.drawString(width-width/4+28,45,defenseD['Did not attempt RW'].strip('[]'))
+	if(defenseD['Did not attempt RT']):
+		c.drawString(width-width/4+28,30,'RT no attempt:')
+		c.drawString(width-width/4+28,15,defenseD['Did not attempt RT'].strip('[]'))
+	# if(defenseD['Alliance Average of RW'] != 'N/A' and defenseD['Alliance Average of RT'] != 'N/A'):
+	# 	if(defenseD['Alliance Average of RW'] > defenseD['Alliance Average of RT']):
+	# 		suggestedD = 'RW'
+	# 	elif(defenseD['Alliance Average of RW'] < defenseD['Alliance Average of RT']):
+	# 		suggestedD = 'RT'
+	# 	else:
+	# 		suggestedD = 'Tie'
+	# else:
+	# 	suggestedD = 'Not enough data.'
+
+	# c.drawString(width-width/4+28,90,'Suggested:')
+	# c.drawString(width-width/4+28,75,suggestedD)
+	# if(defenseD['Did not attempt RW']):
+	# 	c.drawString(width-width/4+28,60,'RW no attempt:')
+	# 	c.drawString(width-width/4+28,45,defenseD['Did not attempt RW'].strip('[]'))
+	# if(defenseD['Did not attempt RT']):
+	# 	c.drawString(width-width/4+28,30,'RT no attempt:')
+	# 	c.drawString(width-width/4+28,15,defenseD['Did not attempt RT'].strip('[]'))
+writeBoxes()
 suggestionBox()
 commentBox()
 autoBoxOwnTeamOne()
