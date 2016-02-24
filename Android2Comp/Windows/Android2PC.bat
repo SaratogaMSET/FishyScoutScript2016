@@ -31,10 +31,14 @@ adb get-serialno
 !serialno!
 @echo on
 @echo !SERIALNO!
-adb pull !inputDir! !outputDir!
+adb pull !inputDir!\scoutNotes.txt !outputDir!
 PAUSE
 echo.
 echo Pulled from the input Directory !inputDir! and pushed to the output Directory !outputDir!.
 PAUSE
 echo Exiting Command Line
+PAUSE
+echo Clearing Space
+PAUSE
+clear
 EXIT /B no
