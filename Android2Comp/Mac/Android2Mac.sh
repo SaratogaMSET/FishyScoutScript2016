@@ -9,7 +9,7 @@
 			adb get-serialno
 			$serialno
 			echo "$serialno"
-			adb pull "$inputDir" "$outputDir"
+			adb pull "$inputDir\scoutNotes.txt" "$outputDir"
 			echo
 			echo Pulled from the input Directory "$inputDir" and pushed to the output Directory "$outputDir".
 					}
@@ -37,5 +37,7 @@
 		mkdir $outputDir    
 		echo New output directory is $outputDir
 		echo Program complete, exit command line
+		echo Clearing Command Line.
+		cls
 	fi
 	exit 0
