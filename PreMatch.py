@@ -66,47 +66,47 @@ def oppTeamOne():
 	c.setFont("Helvetica",14)
 	if(ourAlliance == 'Blue'):
 		c.drawString(width/4+width/45,height-height/13-15*(height/30), red1)
-		c.drawString(width/4+width/45,height-height/13-16*(height/30),str(overall[red1]["Overall Average of Alliance Points"].strip('[]')))
+		c.drawString(width/4+width/45,height-height/13-16*(height/30),str(totals[red1]["Total Alliance Points"]))
 		c.drawString(width/4+width/45,height-height/13-17*(height/30),overall[red1]["Overall Probability of Scoring High Goals"].strip('[]'))
 		c.drawString(width/4+width/45,height-height/13-18*(height/30),overall[red1]["Overall Probability of Scoring Low Goals"].strip('[]'))
 	else:
 		c.drawString(width/4+width/45,height-height/13-15*(height/30), blue1)
-		c.drawString(width/4+width/45,height-height/13-16*(height/30),overall[blue1]["Points"].strip('[]'))
+		c.drawString(width/4+width/45,height-height/13-16*(height/30),str(totals[blue1]["Total Alliance Points"]))
 		c.drawString(width/4+width/45,height-height/13-17*(height/30),overall[blue1]["Overall Probability of Scoring High Goals"].strip('[]'))
 		c.drawString(width/4+width/45,height-height/13-18*(height/30),overall[blue1]["Overall Probability of Scoring Low Goals"].strip('[]'))
 def oppTeamTwo():
 	c.setFont("Helvetica",14)
 	if(ourAlliance == 'Blue'):
 		c.drawString(width/2+width/45,height-height/13-15*(height/30), red2)
-		c.drawString(width/2+width/45,height-height/13-16*(height/30),overall[red2]["Points"].strip('[]'))
+		c.drawString(width/2+width/45,height-height/13-16*(height/30),str(totals[red2]["Total Alliance Points"]))
 		c.drawString(width/2+width/45,height-height/13-17*(height/30),overall[red2]["Overall Probability of Scoring High Goals"].strip('[]'))
 		c.drawString(width/2+width/45,height-height/13-18*(height/30),overall[red2]["Overall Probability of Scoring Low Goals"].strip('[]'))
 	else:
 		c.drawString(width/2+width/45,height-height/13-15*(height/30), blue2)
-		c.drawString(width/2+width/45,height-height/13-16*(height/30),overall[blue2]["Points"].strip('[]'))
+		c.drawString(width/2+width/45,height-height/13-16*(height/30),str(totals[red2]["Total Alliance Points"]))
 		c.drawString(width/2+width/45,height-height/13-17*(height/30),overall[blue2]["Overall Probability of Scoring High Goals"].strip('[]'))
 		c.drawString(width/2+width/45,height-height/13-18*(height/30),overall[blue2]["Overall Probability of Scoring Low Goals"].strip('[]'))
 def oppTeamThree():
 	c.setFont("Helvetica",14)
 	if(ourAlliance == 'Blue'):
 		c.drawString(width+width/45-width/4,height-height/13-15*(height/30), red3)
-		c.drawString(width-width/4+width/45,height-height/13-16*(height/30),overall[red3]["Points"].strip('[]'))
+		c.drawString(width-width/4+width/45,height-height/13-16*(height/30),str(totals[red3]["Total Alliance Points"]))
 		c.drawString(width-width/4+width/45,height-height/13-17*(height/30),overall[red3]["Overall Probability of Scoring High Goals"].strip('[]'))
 		c.drawString(width-width/4+width/45,height-height/13-18*(height/30),overall[red3]["Overall Probability of Scoring Low Goals"].strip('[]'))
 	else:
 		c.drawString(width-width+width/45+width/4,height-height/13-15*(height/30), blue3)
-		c.drawString(width-width/4+width/45,height-height/13-16*(height/30),overall[blue3]["Points"].strip('[]'))
+		c.drawString(width-width/4+width/45,height-height/13-16*(height/30),str(totals[red3]["Total Alliance Points"]))
 		c.drawString(width-width/4+width/45,height-height/13-17*(height/30),overall[blue3]["Overall Probability of Scoring High Goals"].strip('[]'))
 		c.drawString(width-width/4+width/45,height-height/13-18*(height/30),overall[blue3]["Overall Probability of Scoring Low Goals"].strip('[]'))
 def autoBoxOwnTeamOne():
 	c.setFont("Helvetica",14)
 	c.drawString(width/80,height-height/13-10.75*(height/30),"Autonomous")
-	c.drawString(width/4+width/45,height-height/13-10*(height/30),"DATA GOES HERES")
+	# c.drawString(width/4+width/45,height-height/13-10*(height/30),"DATA GOES HERES")
 	c.line(0,height-height/13-12*(height/30),width,height-height/13-12*(height/30))
-def autoBoxOwnTeamTwo():
-	c.drawString(width/2+width/45,height-height/13-10*(height/30),"DATA GOES HERES")
-def autoBoxOwnTeamThree():
-	c.drawString(width-width/4+width/45,height-height/13-10*(height/30),"DATA GOES HERES")
+# def autoBoxOwnTeamTwo():
+# 	# c.drawString(width/2+width/45,height-height/13-10*(height/30),"DATA GOES HERES")
+# def autoBoxOwnTeamThree():
+	# c.drawString(width-width/4+width/45,height-height/13-10*(height/30),"DATA GOES HERES")
 def commentBox():
 	c.setFont("Helvetica",14)
 	c.drawString(width/80,height-height/13-13.25*(height/30),"Comments")
@@ -123,7 +123,7 @@ def ownTeamOne():
 	c.setFont("Helvetica",14)
 	if(ourAlliance == 'Blue'):
 		c.drawString(width/4+width/45,height-height/13, blue1)
-		c.drawString(width/4+width/45,height-height/13-1*(height/30),overall[blue1]["Points"].strip('[]'))
+		c.drawString(width/4+width/45,height-height/13-1*(height/30),str(totals[blue1]["Total Alliance Points"]))
 		c.drawString(width/4+width/45,height-height/13-2*(height/30),overall[blue1]["Overall Probability of Scoring High Goals"].strip('[]'))
 		c.drawString(width/4+width/45,height-height/13-3*(height/30),overall[blue1]["Overall Probability of Scoring Low Goals"].strip('[]'))
 		c.drawString(width/4+width/45,height-height/13-4*(height/30),str(overall[blue1]["Overall Average Difficulty of PC"]).strip('[]') + " || " + str(overall[blue1]["Overall Average Difficulty of CF"]).strip('[]'))
@@ -133,7 +133,7 @@ def ownTeamOne():
 		c.drawString(width/4+width/45,height-height/13-8*(height/30),str(overall[blue1]["Overall Average Difficulty of LB"]).strip('[]'))
 	else:
 		c.drawString(width/4+width/45,height-height/13, red1)
-		c.drawString(width/4+width/45,height-height/13-1*(height/30),overall[red1]["Points"].strip('[]'))
+		c.drawString(width/4+width/45,height-height/13-1*(height/30),str(totals[red1]["Total Alliance Points"]))
 		c.drawString(width/4+width/45,height-height/13-2*(height/30),overall[red1]["Overall Probability of Scoring High Goals"].strip('[]'))
 		c.drawString(width/4+width/45,height-height/13-3*(height/30),overall[red1]["Overall Probability of Scoring Low Goals"].strip('[]'))
 		c.drawString(width/4+width/45,height-height/13-4*(height/30),str(overall[red1]["Overall Average Difficulty of PC"]).strip('[]') + " || " + str(overall[red1]["Overall Average Difficulty of CF"]).strip('[]'))
@@ -145,7 +145,7 @@ def ownTeamTwo():
 	c.setFont("Helvetica",14)
 	if(ourAlliance == 'Blue'):
 		c.drawString(width/2+width/45,height-height/13, blue2)
-		c.drawString(width/2+width/45,height-height/13-1*(height/30),overall[blue2]["Points"].strip('[]'))
+		c.drawString(width/2+width/45,height-height/13-1*(height/30),str(totals[blue2]["Total Alliance Points"]))
 		c.drawString(width/2+width/45,height-height/13-2*(height/30),overall[blue2]["Overall Probability of Scoring High Goals"].strip('[]'))
 		c.drawString(width/2+width/45,height-height/13-3*(height/30),overall[blue2]["Overall Probability of Scoring Low Goals"].strip('[]'))
 		c.drawString(width/2+width/45,height-height/13-4*(height/30),str(overall[blue2]["Overall Average Difficulty of PC"]).strip('[]') + " || " + str(overall[blue2]["Overall Average Difficulty of CF"]).strip('[]'))
@@ -155,7 +155,7 @@ def ownTeamTwo():
 		c.drawString(width/2+width/45,height-height/13-8*(height/30),str(overall[blue2]["Overall Average Difficulty of LB"]).strip('[]'))
 	else:
 		c.drawString(width/2+width/45,height-height/13, red2)
-		c.drawString(width/2+width/45,height-height/13-1*(height/30),overall[red2]["Points"].strip('[]'))
+		c.drawString(width/2+width/45,height-height/13-1*(height/30),str(totals[red2]["Total Alliance Points"]))
 		c.drawString(width/2+width/45,height-height/13-2*(height/30),overall[red2]["Overall Probability of Scoring High Goals"].strip('[]'))
 		c.drawString(width/2+width/45,height-height/13-3*(height/30),overall[red2]["Overall Probability of Scoring Low Goals"].strip('[]'))
 		c.drawString(width/2+width/45,height-height/13-4*(height/30),str(overall[red2]["Overall Average Difficulty of PC"]).strip('[]') + " || " + str(overall[red2]["Overall Average Difficulty of CF"]).strip('[]'))
@@ -167,7 +167,7 @@ def ownTeamThree():
 	c.setFont("Helvetica",14)
 	if(ourAlliance == 'Blue'):
 		c.drawString(width+width/45-width/4,height-height/13, blue3)
-		c.drawString(width-width/4+width/45,height-height/13-1*(height/30),overall[blue3]["Points"].strip('[]'))
+		c.drawString(width-width/4+width/45,height-height/13-1*(height/30),str(totals[blue3]["Total Alliance Points"]))
 		c.drawString(width-width/4+width/45,height-height/13-2*(height/30),overall[blue3]["Overall Probability of Scoring High Goals"].strip('[]'))
 		c.drawString(width-width/4+width/45,height-height/13-3*(height/30),overall[blue3]["Overall Probability of Scoring Low Goals"].strip('[]'))
 		c.drawString(width-width/4+width/45,height-height/13-4*(height/30),str(overall[blue3]["Overall Average Difficulty of PC"]).strip('[]') + " || " + str(overall[blue3]["Overall Average Difficulty of CF"]).strip('[]'))
@@ -177,7 +177,7 @@ def ownTeamThree():
 		c.drawString(width-width/4+width/45,height-height/13-8*(height/30),str(overall[blue3]["Overall Average Difficulty of LB"]).strip('[]'))
 	else:
 		c.drawString(width+width/45+width/4,height-height/13, red3)
-		c.drawString(width-width/4+width/45,height-height/13-1*(height/30),overall[red3]["Points"].strip('[]'))
+		c.drawString(width-width/4+width/45,height-height/13-1*(height/30),str(totals[red3]["Total Alliance Points"]))
 		c.drawString(width-width/4+width/45,height-height/13-2*(height/30),overall[red3]["Overall Probability of Scoring High Goals"].strip('[]'))
 		c.drawString(width-width/4+width/45,height-height/13-3*(height/30),overall[red3]["Overall Probability of Scoring Low Goals"].strip('[]'))
 		c.drawString(width-width/4+width/45,height-height/13-4*(height/30),str(overall[red3]["Overall Average Difficulty of PC"]).strip('[]') + " || " + str(overall[red3]["Overall Average Difficulty of CF"]).strip('[]'))
@@ -259,7 +259,7 @@ def writeBoxes():
 		suggestedC = 'Not enough data.'
 
 	c.drawString(width/2+28,90,'Suggested:')
-	c.drawString(width/2+28,75,suggestedA)
+	c.drawString(width/2+28,75,suggestedC)
 	if(defenseC['Did not attempt DB']):
 		c.drawString(width/2+28,60,'DB no attempt:')
 		c.drawString(width/2+28,45,defenseC['Did not attempt DB'].strip('[]'))
@@ -312,8 +312,8 @@ oppTeamTwo()
 commentBox2()
 oppTeamThree()
 autoBoxOpp()
-autoBoxOwnTeamTwo()
-autoBoxOwnTeamThree()
+# autoBoxOwnTeamTwo()
+# autoBoxOwnTeamThree()
 ownTeamOne()
 ownTeamTwo()
 ownTeamThree()
