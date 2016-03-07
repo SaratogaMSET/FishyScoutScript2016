@@ -19,7 +19,8 @@ blue2 = '7'
 blue3 = '649'
 ourAlliance = 'Blue'
 
-c = canvas.Canvas("Pre-Match Form" + ".pdf",pagesize = letter)
+
+c = canvas.Canvas("Pre-Match Form " + match + ".pdf", pagesize = letter)
 
 teams = generateDict("oneFile.txt")
 
@@ -29,12 +30,13 @@ totals = generateTotals(teams,overall)
 totalsRankings = generateTotalsRankings(totals)
 
 
-c.setLineWidth(.3)
+c.setLineWidth(.3)
 width , height = letter
 
 def topBox():
 	c.setFont("Helvetica",20)
-	c.drawString(width/45,height-height/30,"Match Number: " + match + " Pre-Match Form")
+	c.drawString(width/45,height-height/30,"Pre-Match Form")
+	c.drawString(width-width/10,height-height/30, match)
 	c.line(0,height-height/20,width,height-height/20)
 def tableLayout():
 	c.line(width/4,height-height/20,width/4,0)
@@ -48,11 +50,11 @@ def ownAllianceBox():
 	c.drawString(width/80,height-height/13-height/30,"Average Match Score")
 	c.drawString(width/80,height-height/13-2*(height/30),"High Goal Ratio")
 	c.drawString(width/80,height-height/13-3*(height/30),"Low Goal Ratio")
-	c.drawString(width/80,height-height/13-4*(height/30),"Portcullis||Cheval")
-	c.drawString(width/80,height-height/13-5*(height/30),"Ramparts||Moat")
-	c.drawString(width/80,height-height/13-6*(height/30),"Sallyport||Drawbridge")
-	c.drawString(width/80,height-height/13-7*(height/30),"Rockwall||Roughterrain")
-	c.drawString(width/60,height-height/13-8*(height/30),"Lowbar")
+	c.drawString(width/80,height-height/13-4*(height/30),"PC||CF")
+	c.drawString(width/80,height-height/13-5*(height/30),"RP||M")
+	c.drawString(width/80,height-height/13-6*(height/30),"SP||DB")
+	c.drawString(width/80,height-height/13-7*(height/30),"RW||RT")
+	c.drawString(width/60,height-height/13-8*(height/30),"LB")
 	c.drawString(width/60,height-height/13-9*(height/30),"Endgame")
 def oppAllianceBox():
 	c.setFont("Helvetica",14)
