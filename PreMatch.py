@@ -9,14 +9,14 @@ from appToScript import *
 from PIL import Image
 import glob, os
 
-match = '12'
+match = '2'
 
-red1 = '107'
-red2 = '445'
-red3 = '87'
-blue1 = '990'
-blue2 = '7'
-blue3 = '649'
+red1 = '649'
+red2 = '118'
+red3 = '846'
+blue1 = '254'
+blue2 = "1678"
+blue3 = '971'
 ourAlliance = 'Blue'
 
 
@@ -29,8 +29,6 @@ rankings = generateRankings(overall)
 totals = generateTotals(teams,overall)
 totalsRankings = generateTotalsRankings(totals)
 
-
-c.setLineWidth(.3)
 width , height = letter
 
 def topBox():
@@ -196,7 +194,7 @@ def suggestionBox():
 	c.rect(width/2+26,5,100,100, stroke=1, fill=0)
 	c.rect(width-width/4+26,5,100,100, stroke=1, fill=0)
 def writeBoxes():
-	c.setFont("Helvetica",12)
+	c.setFont("Helvetica",11)
 	if(ourAlliance=='Blue'):
 		defenseA = compareDefenseCategory(red1, red2, red3, "PC", "CF", overall)
 	else:
@@ -223,7 +221,6 @@ def writeBoxes():
 			suggestedA = 'Tie'
 	else:
 		suggestedA = 'Not enough data.'
-
 	c.drawString(28,90,'Suggested:')
 	c.drawString(28,75,suggestedA)
 	if(defenseA['Did not attempt PC']):
@@ -234,7 +231,7 @@ def writeBoxes():
 		c.drawString(28,15,defenseA['Did not attempt CF'].strip('[]'))
 	if(defenseB['Alliance Average of M'] != 'N/A' and defenseB['Alliance Average of RP'] != 'N/A'):
 		if(defenseB['Alliance Average of M'] > defenseB['Alliance Average of RP']):
-			suggestedA = 'M'
+			suggestedB = 'M'
 		elif(defenseB['Alliance Average of M'] < defenseB['Alliance Average of RP']):
 			suggestedB = 'RP'
 		else:

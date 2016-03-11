@@ -99,11 +99,13 @@ def generateDict(fileName):
 	matches = [] #append all 6 textfiles and read
 	while read: #text file names: r1.txt, r2.txt, r3.txt, b1.txt, b2.txt, b3.txt
 		matches.append(oneTeamoneMatch())
+	print matches
 	newNumber = True
 	teams = {}
 	i = 0
 	while len(matches) > 0:
 		team = sortByTeam(matches)
+		
 		num = str(team[0]["Team Number"][0])
 		teams[num] = team
 		#return teams
@@ -111,7 +113,7 @@ def generateDict(fileName):
 
 def generateTeamOverall(teams):
 	teamOverall = {} #dictionary to be returned
-	for key in teams: #key is teamnumber
+	for key in teams: 
 		highGoalsMade = 0
 		highGoalsTried = 0
 		lowGoalsMade = 0
@@ -123,14 +125,19 @@ def generateTeamOverall(teams):
 		teamOverall[key] = {} #dictionary in each key of teamOverall
 		defenses = ["PC", "CF", "M", "RP", "SP", "DB", "RW", "RT", "LB"] #all possible defenses 
 		for i in range(len(teams[key])): #go through each match for each team
-			highGoalsMade += int(teams[key][i]["Probability of Scoring High Goals"][0])
-			highGoalsTried += int(teams[key][i]["Probability of Scoring High Goals"][2])
-			lowGoalsMade += int(teams[key][i]["Probability of Scoring Low Goals"][0])
-			lowGoalsTried += int(teams[key][i]["Probability of Scoring Low Goals"][2])
+			#highGoalsMade += int(teams[key][i]["Probability of Scoring High Goals"][0])
+			#highGoalsTried += int(teams[key][i]["Probability of Scoring High Goals"][2])
+			#lowGoalsMade += int(teams[key][i]["Probability of Scoring Low Goals"][0])
+			#lowGoalsTried += int(teams[key][i]["Probability of Scoring Low Goals"][2])
+			highGoalsMade += int(teams[key][i]["Probability of Scoring High Goals"].split("/", 1)[0])
+			highGoalsTried += int(teams[key][i]["Probability of Scoring High Goals"].split("/", 1)[1])
+			lowGoalsMade += int(teams[key][i]["Probability of Scoring Low Goals"].split("/", 1)[0])
+			lowGoalsTried += int(teams[key][i]["Probability of Scoring Low Goals"].split("/", 1)[1])
 			for j in range(len(defenses)):
 				if teams[key][i].get("Average Difficulty of " + defenses[j]) != None:
-					defensesAvg[j] += teams[key][i]["Average Difficulty of " + defenses[j]]
-					numAverages[j] += 1
+					if teams[key][i]["Average Difficulty of " + defenses[j]] != "N/A":
+							defensesAvg[j] += teams[key][i]["Average Difficulty of " + defenses[j]]
+							numAverages[j] += 1
 			if teams[key][i]["Result"] == "Win":
 				totalWins += 1
 			elif teams[key][i]["Result"] == "Tie":
@@ -173,19 +180,25 @@ def generateRankings(teamOverall):
 	points = []
 	for i in range(len(teamNumbers)): #must have a separate loop for each proportion because order of teamNumbers will be messed up
 		proportionHigh = teamOverall[teamNumbers[i]]["Overall Probability of Scoring High Goals"]
-		highGoals.append(float(proportionHigh[0])/int(proportionHigh[2]))		
+		if int(proportionHigh.split("/", 1)[1]) != 0: 
+			highGoals.append(float(proportionHigh.split("/", 1)[0])/int(proportionHigh.split("/", 1)[1]))
+		else:
+			highGoals.append("N/A")		
 	bubbleSort(highGoals, teamNumbers)
 	for j in range(len(teamNumbers)):
 		rankings["Overall Probability of Scoring High Goals"][teamNumbers[j]] = len(teamNumbers) - j
 	for i in range(len(teamNumbers)):
 		proportionLow = teamOverall[teamNumbers[i]]["Overall Probability of Scoring Low Goals"]
-		lowGoals.append(float(proportionLow[0])/int(proportionLow[2]))
+		if int(proportionLow.split("/", 1)[1]) != 0:
+			lowGoals.append(float(proportionLow.split("/", 1)[0])/int(proportionLow.split("/", 1)[1]))
+		else:
+			lowGoals.append("N/A")
 	bubbleSort(lowGoals, teamNumbers)
 	for j in range(len(teamNumbers)):
 		rankings["Overall Probability of Scoring Low Goals"][teamNumbers[j]] = len(teamNumbers) - j
 	for i in range(len(teamNumbers)):
 		proportionWin = teamOverall[teamNumbers[i]]["Proportion of Wins"]
-		wins.append(float(proportionWin[0])/int(proportionWin[2]))
+		wins.append(float(proportionWin.split("/", 1)[0])/int(proportionWin.split("/", 1)[1]))
 	bubbleSort(wins, teamNumbers)
 	for j in range(len(teamNumbers)):
 		rankings["Proportion of Wins"][teamNumbers[j]] = len(teamNumbers) - j
@@ -212,8 +225,8 @@ def generateTotals(teams, teamOverall):
 			totalPoints += teams[key][i]["Total Points"][0]
 		for i in range(len(defenses)):
 			defenseTotals[key]["Total Successes to Cross " + defenses[i]] = numOfSuccesses[i]
-		defenseTotals[key]["Total Successes of High Goals"] = int(teamOverall[key]["Overall Probability of Scoring High Goals"][0])
-		defenseTotals[key]["Total Successes of Low Goals"] = int(teamOverall[key]["Overall Probability of Scoring Low Goals"][0])
+		defenseTotals[key]["Total Successes of High Goals"] = int(teamOverall[key]["Overall Probability of Scoring High Goals"].split("/", 1)[0])
+		defenseTotals[key]["Total Successes of Low Goals"] = int(teamOverall[key]["Overall Probability of Scoring Low Goals"].split("/", 1)[0])
 		defenseTotals[key]["Total Alliance Points"] = totalPoints
 	return defenseTotals
 
@@ -322,14 +335,12 @@ generateOneFile() #generates a file with all the appended text files!  NOTE: mus
 allFile.close()
 teams = generateDict("oneFile.txt")
 overall = generateTeamOverall(teams)
-print overall["7"]
-print overall["990"]
-print overall["107"]
+
 #print overall
 print generateRankings(overall)
 totals = generateTotals(teams, overall)
 print totals
-#print generateTotalsRankings(totals)
+totalRankings = generateTotalsRankings(totals)
 #keys = []
 #for key in overall:
 #	keys.append(key)
@@ -340,5 +351,5 @@ print totals
 #print keys[2]
 #print overall[keys[2]]
 #teamNumbers = [keys[0], keys[1], keys[2]]
-#print compareDefenses3(overall[keys[0]], overall[keys[1]], overall[keys[2]], teamNumbers) 
-# print compareDefenseCategory("7", "990", "107", "PC", "LB", overall)
+#defensesThree = compareDefenses3(overall[keys[0]], overall[keys[1]], overall[keys[2]], teamNumbers) 
+# category = compareDefenseCategory("7", "990", "107", "PC", "LB", overall)

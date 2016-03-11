@@ -10,7 +10,7 @@ from PIL import Image
 import glob, os
 
 
-team = '87'
+team = '118'
 teams = generateDict("oneFile.txt")
 
 overall = generateTeamOverall(teams)

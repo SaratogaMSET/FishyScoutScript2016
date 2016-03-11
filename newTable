@@ -7,7 +7,7 @@ from reportlab.lib.units import inch
 from reportlab.rl_config import defaultPageSize
 from appToScript import *
 
-team = '87'
+team = '649'
 teams = generateDict("oneFile.txt")
 
 overall = generateTeamOverall(teams)
@@ -49,6 +49,7 @@ def drawTable():
  		c.line(width/48+i*(width/6),height/50,width/48+i*(width/6),height-height/50)
  		c.drawString(width/48+i*width/6,height+height/180-height/25,str(teams[team][i-1]["Match Number"][0]))
  		i+=1
+ 	
  	c.line(width/48+i*(width/6),height/50,width/48+i*(width/6),height-height/50)
 def scouterName():
  	c.line(width/50,height-2*(height/25),width-width/50,height-2*(height/25))
