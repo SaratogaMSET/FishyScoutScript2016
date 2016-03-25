@@ -105,11 +105,16 @@ def generateDict(fileName):
 	i = 0
 	while len(matches) > 0:
 		team = sortByTeam(matches)
-		
 		num = str(team[0]["Team Number"][0])
 		teams[num] = team
 		#return teams
 	return teams
+
+def getMatchesArray(teams, teamNumber):
+	matches = []
+	for i in range(len(teams[teamNumber])):
+		matches.append(teams[teamNumber][i]["Match Number"][0])
+	return matches
 
 def generateTeamOverall(teams):
 	teamOverall = {} #dictionary to be returned
@@ -334,6 +339,8 @@ def compareDefenseCategory(team1, team2, team3, defense1, defense2, overall):
 generateOneFile() #generates a file with all the appended text files!  NOTE: must delete the file generated to run the code again
 allFile.close()
 teams = generateDict("oneFile.txt")
+print teams
+print getMatchesArray(teams, "649")
 overall = generateTeamOverall(teams)
 
 #print overall
