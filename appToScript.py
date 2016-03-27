@@ -92,6 +92,17 @@ def generateOneFile():
 			allFile.write(string)
 			readOn = False
 
+def orderByMatchNumber(oldTeams):
+	teams = {}
+	for key in oldTeams:
+		matches = getMatchesArray(oldTeams, key)
+		indices = range(len(oldTeams[key]))
+		bubbleSortLowToHigh(matches, indices)
+		teams[key] = []
+		for i in range(len(indices)):
+			teams[key].append(oldTeams[key][indices[i]])
+	return teams
+
 def generateDict(fileName):
 	global read
 	openFiles(fileName)
@@ -99,15 +110,15 @@ def generateDict(fileName):
 	matches = [] #append all 6 textfiles and read
 	while read: #text file names: r1.txt, r2.txt, r3.txt, b1.txt, b2.txt, b3.txt
 		matches.append(oneTeamoneMatch())
-	print matches
 	newNumber = True
-	teams = {}
+	unsortedTeams = {}
 	i = 0
 	while len(matches) > 0:
 		team = sortByTeam(matches)
 		num = str(team[0]["Team Number"][0])
-		teams[num] = team
+		unsortedTeams[num] = team
 		#return teams
+	teams = orderByMatchNumber(unsortedTeams)
 	return teams
 
 def getMatchesArray(teams, teamNumber):
@@ -171,7 +182,7 @@ def generateRankings(teamOverall):
 		defenseValues = []
 		for j in range(len(teamNumbers)):
 			defenseValues.append(teamOverall[teamNumbers[j]]["Overall Average Difficulty of " + defenses[i]])
-		bubbleSort(defenseValues, teamNumbers) #sorts teamNumbers based on defenseValues
+		bubbleSortLowToHigh(defenseValues, teamNumbers) #sorts teamNumbers based on defenseValues
 		for j in range(len(teamNumbers)):
 			rankings["Average Difficulty of " + defenses[i]][teamNumbers[j]] = j + 1
 	rankings["Overall Probability of Scoring High Goals"] = {}
@@ -189,30 +200,89 @@ def generateRankings(teamOverall):
 			highGoals.append(float(proportionHigh.split("/", 1)[0])/int(proportionHigh.split("/", 1)[1]))
 		else:
 			highGoals.append("N/A")		
-	bubbleSort(highGoals, teamNumbers)
+	bubbleSortHighToLow(highGoals, teamNumbers)
 	for j in range(len(teamNumbers)):
-		rankings["Overall Probability of Scoring High Goals"][teamNumbers[j]] = len(teamNumbers) - j
+		rankings["Overall Probability of Scoring High Goals"][teamNumbers[j]] = j + 1
 	for i in range(len(teamNumbers)):
 		proportionLow = teamOverall[teamNumbers[i]]["Overall Probability of Scoring Low Goals"]
 		if int(proportionLow.split("/", 1)[1]) != 0:
 			lowGoals.append(float(proportionLow.split("/", 1)[0])/int(proportionLow.split("/", 1)[1]))
 		else:
 			lowGoals.append("N/A")
-	bubbleSort(lowGoals, teamNumbers)
+	bubbleSortHighToLow(lowGoals, teamNumbers)
 	for j in range(len(teamNumbers)):
-		rankings["Overall Probability of Scoring Low Goals"][teamNumbers[j]] = len(teamNumbers) - j
+		rankings["Overall Probability of Scoring Low Goals"][teamNumbers[j]] = j + 1
 	for i in range(len(teamNumbers)):
 		proportionWin = teamOverall[teamNumbers[i]]["Proportion of Wins"]
 		wins.append(float(proportionWin.split("/", 1)[0])/int(proportionWin.split("/", 1)[1]))
-	bubbleSort(wins, teamNumbers)
+	bubbleSortHighToLow(wins, teamNumbers)
 	for j in range(len(teamNumbers)):
-		rankings["Proportion of Wins"][teamNumbers[j]] = len(teamNumbers) - j
+		rankings["Proportion of Wins"][teamNumbers[j]] = j + 1
 	for i in range(len(teamNumbers)):
 		points.append(teamOverall[teamNumbers[i]]["Overall Average Alliance Points"])
-	bubbleSort(points, teamNumbers)
+	bubbleSortHighToLow(points, teamNumbers)
 	for j in range(len(teamNumbers)):
-		rankings["Average Alliance Match Points"][teamNumbers[j]] = len(teamNumbers) - j
+		rankings["Average Alliance Match Points"][teamNumbers[j]] = j + 1
 	return rankings
+
+def generateAutoDict(teams):
+	autoTeams = {}
+	for key in teams:
+		autoTeams[key] = {}
+		autoHighGoals = 0
+		autoHighAttempts = 0
+		autoLowGoals = 0
+		autoLowAttempts = 0
+		autoCrosses = 0
+		for i in range(len(teams[key])):
+			for j in range(len(teams[key][i]["Auto High Goal Shots"])):
+				if teams[key][i]["Auto High Goal Shots"][j] == 1: autoHighGoals += 1
+			for j in range(len(teams[key][i]["Auto Low Goal Shots"])):
+				if teams[key][i]["Auto Low Goal Shots"][j] == 1: autoLowGoals += 1
+			if teams[key][i]["Auto Crosses Defense"] != '': autoCrosses += 1
+			autoHighAttempts += len(teams[key][i]["Auto High Goal Shots"])
+			autoLowAttempts += len(teams[key][i]["Auto Low Goal Shots"])
+		autoTeams[key]["Probability of Scoring Auto High Goals"] = str(autoHighGoals) + "/" + str(autoHighAttempts)
+		autoTeams[key]["Probability of Scoring Auto Low Goals"] = str(autoLowGoals) + "/" + str(autoLowAttempts)
+		autoTeams[key]["Ratio of Crossing a Defense in Auto"] = str(autoCrosses) + "/" + str(len(teams[key]))
+	return autoTeams
+
+def generateAutoRankings(autoTeams):
+	autoRankings = {}
+	teamNumbers = []
+	for key in autoTeams:
+		teamNumbers.append(key)
+	autoRankings["Probability of Scoring Auto High Goals"] = {}
+	autoRankings["Probability of Scoring Auto Low Goals"] = {}
+	autoRankings["Ratio of Crossing a Defense in Auto"] = {}
+	autoHighGoals = []
+	autoLowGoals = []
+	autoCrosses = []
+	for i in range(len(teamNumbers)):
+		autoProportionHigh = autoTeams[teamNumbers[i]]["Probability of Scoring Auto High Goals"]
+		if int(autoProportionHigh.split("/", 1)[1]) != 0: 
+			autoHighGoals.append(float(autoProportionHigh.split("/", 1)[0])/int(autoProportionHigh.split("/", 1)[1]))
+		else:
+			autoHighGoals.append("N/A")		
+	bubbleSortHighToLow(autoHighGoals, teamNumbers)
+	for j in range(len(teamNumbers)):
+		autoRankings["Probability of Scoring Auto High Goals"][teamNumbers[j]] = j + 1
+	for i in range(len(teamNumbers)):
+		autoProportionLow = autoTeams[teamNumbers[i]]["Probability of Scoring Auto Low Goals"]
+		if int(autoProportionLow.split("/", 1)[1]) != 0: 
+			autoLowGoals.append(float(autoProportionLow.split("/", 1)[0])/int(autoProportionLow.split("/", 1)[1]))
+		else:
+			autoLowGoals.append("N/A")		
+	bubbleSortHighToLow(autoLowGoals, teamNumbers)
+	for j in range(len(teamNumbers)):
+		autoRankings["Probability of Scoring Auto Low Goals"][teamNumbers[j]] = j + 1
+	for i in range(len(teamNumbers)):
+		autoRatioCrosses = autoTeams[teamNumbers[i]]["Ratio of Crossing a Defense in Auto"] 
+		autoCrosses.append(float(autoRatioCrosses.split("/", 1)[0])/int(autoRatioCrosses.split("/", 1)[1])) #matches played cannot be 0
+	bubbleSortHighToLow(autoCrosses, teamNumbers)
+	for j in range(len(teamNumbers)):
+		autoRankings["Ratio of Crossing a Defense in Auto"][teamNumbers[j]] = j + 1
+	return autoRankings
 
 def generateTotals(teams, teamOverall):
 	defenseTotals = {}
@@ -246,9 +316,9 @@ def generateTotalsRankings(defenseTotals):
 		defenseTotalValues = []
 		for j in range(len(teamNumbers)):
 			defenseTotalValues.append(defenseTotals[teamNumbers[j]]["Total Successes to Cross " + defenses[i]])
-		bubbleSort(defenseTotalValues, teamNumbers) #sorts teamNumbers based on defenseValues
+		bubbleSortHighToLow(defenseTotalValues, teamNumbers) #sorts teamNumbers based on defenseValues
 		for j in range(len(teamNumbers)):
-			totalsRankings["Total Successes to Cross " + defenses[i]][teamNumbers[j]] = len(teamNumbers) - j
+			totalsRankings["Total Successes to Cross " + defenses[i]][teamNumbers[j]] = j + 1
 	totalsRankings["Total Successes of High Goals"] = {}
 	totalsRankings["Total Successes of Low Goals"] = {}
 	totalsRankings["Total Alliance Points"] = {}
@@ -257,22 +327,22 @@ def generateTotalsRankings(defenseTotals):
 	points = []
 	for i in range(len(teamNumbers)): #must have a separate loop for each proportion because order of teamNumbers will be messed up
 		highGoals.append(defenseTotals[teamNumbers[i]]["Total Successes of High Goals"])		
-	bubbleSort(highGoals, teamNumbers)
+	bubbleSortHighToLow(highGoals, teamNumbers)
 	for j in range(len(teamNumbers)):
-		totalsRankings["Total Successes of High Goals"][teamNumbers[j]] = len(teamNumbers) - j
+		totalsRankings["Total Successes of High Goals"][teamNumbers[j]] = j + 1
 	for i in range(len(teamNumbers)):
 		lowGoals.append(defenseTotals[teamNumbers[i]]["Total Successes of Low Goals"])
-	bubbleSort(lowGoals, teamNumbers)
+	bubbleSortHighToLow(lowGoals, teamNumbers)
 	for j in range(len(teamNumbers)):
-		totalsRankings["Total Successes of Low Goals"][teamNumbers[j]] = len(teamNumbers) - j
+		totalsRankings["Total Successes of Low Goals"][teamNumbers[j]] = j + 1
 	for i in range(len(teamNumbers)):
 		points.append(defenseTotals[teamNumbers[i]]["Total Alliance Points"])
-	bubbleSort(points, teamNumbers)
+	bubbleSortHighToLow(points, teamNumbers)
 	for j in range(len(teamNumbers)):
-		totalsRankings["Total Alliance Points"][teamNumbers[j]] = len(teamNumbers) - j
+		totalsRankings["Total Alliance Points"][teamNumbers[j]] = j + 1
 	return totalsRankings
 
-def bubbleSort(values, numbers): #smallest to biggest
+def bubbleSortLowToHigh(values, numbers): #smallest to biggest
 	for onePass in range(len(values) - 1, 0, -1):
 		for i in range(0, onePass):
 			if values[i + 1] == "N/A":
@@ -284,6 +354,25 @@ def bubbleSort(values, numbers): #smallest to biggest
 				del(numbers[i + 1])
 				i -= 1
 			elif values[i + 1] < values[i]:
+				tempValue = values[i]
+				tempNumber = numbers[i]
+				values[i] = values[i + 1]
+				numbers[i] = numbers[i + 1]
+				values[i + 1] = tempValue
+				numbers[i + 1] = tempNumber
+
+def bubbleSortHighToLow(values, numbers): #biggest to smallest
+	for onePass in range(len(values) - 1, 0, -1):
+		for i in range(0, onePass):
+			if values[i + 1] == "N/A":
+				a = values[i + 1]
+				b = numbers[i + 1]
+				values.append(a)
+				numbers.append(b)
+				del(values[i + 1])
+				del(numbers[i + 1])
+				i -= 1
+			elif values[i + 1] > values[i]:
 				tempValue = values[i]
 				tempNumber = numbers[i]
 				values[i] = values[i + 1]
@@ -340,13 +429,14 @@ generateOneFile() #generates a file with all the appended text files!  NOTE: mus
 allFile.close()
 teams = generateDict("oneFile.txt")
 print teams
-print getMatchesArray(teams, "649")
+autoTeams = generateAutoDict(teams)
+print autoTeams
+print generateAutoRankings(autoTeams)
 overall = generateTeamOverall(teams)
-
-#print overall
+print overall
 print generateRankings(overall)
 totals = generateTotals(teams, overall)
-print totals
+#print totals
 totalRankings = generateTotalsRankings(totals)
 #keys = []
 #for key in overall:
