@@ -7,382 +7,380 @@ from reportlab.lib.units import inch
 from reportlab.rl_config import defaultPageSize
 from appToScript import *
 
-team = '649'
+team = '1678'
 teams = generateDict("oneFile.txt")
+print teams[team]
 
 overall = generateTeamOverall(teams)
-rankings = generateRankings(overall)
 totals = generateTotals(teams,overall)
 totalsRankings = generateTotalsRankings(totals)
+matches = getMatchesArray(teams,team)
+auto = generateAutoDict(teams)
+rankings = generateRankings(overall,auto)
+totalMatches = len(matches)
 
-totalMatches = len(teams[team])
+print totalMatches
+#for key in teams[team]:
+#	totalMatches+=1
 
 c = canvas.Canvas(team + " Scouting Form " + "Page 2.pdf",pagesize = letter)
-if totalMatches > 6:
+if totalMatches >= 5:
 	c2 = canvas.Canvas(team + " Scouting Form " + "Page 3.pdf",pagesize = letter)
-	numberOfMatches = 6
-else:
-	numberOfMatches = totalMatches
+	# numberOfMatches = 4
+	c2.setFont("Helvetica",10)
+# else:
+	# numberOfMatches = totalMatches
+c.setFont("Helvetica",10)
 
 width , height = letter
 """Team Number : [] dict Game : Scouter name, name"""
 
 
-
 # def matchNumber():
-# 	c.drawString(height/48,width-2*(width/45), 'Match')
+# 	c.drawString(height/40,width-2*(width/45), 'Match')
 # 	c.line(height/15,width-width/50,height/15,width/50)
 # 	i=1
 # 	while i<=numberOfMatches:
-# 		c.line(height-height/50,width-i*(width/20),height/50,width-i*(width/20))
-# 		c.drawString(height/48,width-(i+1)*(width/22),str(teams[team][i-1]["Match Number"][0]))
+# 		c.line(height-height/50,width-i*(width/28),height/50,width-i*(width/28))
+# 		c.drawString(height/40,width-(i+1)*(width/22),str(teams[team][i]["Match Number"][0]))
 # 		i+=1
-# 	c.line(height-height/50,width-i*(width/20),height/50,width-i*(width/20))
+# 	c.line(height-height/50,width-i*(width/28),height/50,width-i*(width/28))
 # def DrawTableNew():
-# 	c.drawString(height/48)
+# 	c.drawString(height/40)
 def drawTable():
 	c.rect(width/50,height/50,width-width/25,height-height/25, fill=0)
 	c.line(width/50,height-height/25,width-width/50,height-height/25)
-	c.drawString(width/48,height+height/180-height/25, "Matches")
-	i=1
-	while i<=numberOfMatches:
- 		c.line(width/48+i*(width/6),height/50,width/48+i*(width/6),height-height/50)
- 		c.drawString(width/48+i*width/6,height+height/180-height/25,str(teams[team][i-1]["Match Number"][0]))
- 		i+=1
- 	
- 	c.line(width/48+i*(width/6),height/50,width/48+i*(width/6),height-height/50)
-def scouterName():
- 	c.line(width/50,height-2*(height/25),width-width/50,height-2*(height/25))
-	c.drawString(width/48,height+height/180-2*(height/25), "Scouter Name")
-	i=1
-	while i<=numberOfMatches:
- 		c.drawString(width/48+i*width/6,height+height/180-2*(height/25),str(teams[team][i-1]["Scouter Name"]))
- 		i+=1
-def points():
- 	c.line(width/50,height-3*(height/25),width-width/50,height-3*(height/25))
-	c.drawString(width/48,height+height/180-3*(height/25), "Total Points")
-	i=1
-	while i<=numberOfMatches:
- 		c.drawString(width/48+i*width/6,height+height/180-3*(height/25),str(teams[team][i-1]["Total Points"][0]))
- 		i+=1
-def autoHighShots():
- 	c.line(width/50,height-4*(height/25),width-width/50,height-4*(height/25))
-	c.drawString(width/48,height+height/180-4*(height/25), "Auto High")
-	i=1
-	while i<=numberOfMatches:
- 		c.drawString(width/48+i*width/6,height+height/180-4*(height/25),str(teams[team][i-1]["Auto High Goal Shots"]).strip('[]'))
- 		i+=1
-def autoLowShots():
- 	c.line(width/50,height-5*(height/25),width-width/50,height-5*(height/25))
-	c.drawString(width/48,height+height/180-5*(height/25), "Auto Low")
-	i=1
-	while i<=numberOfMatches:
- 		c.drawString(width/48+i*width/6,height+height/180-5*(height/25),str(teams[team][i-1]["Auto Low Goal Shots"]).strip('[]'))
- 		i+=1
-def autoCross():
- 	c.line(width/50,height-6*(height/25),width-width/50,height-6*(height/25))
-	c.drawString(width/48,height+height/180-6*(height/25), "Auto Defense")
-	i=1
-	while i<=numberOfMatches:
- 		c.drawString(width/48+i*width/6,height+height/180-6*(height/25),str(teams[team][i-1]["Auto Crosses Defense"]))
- 		i+=1
-def defensesOnField():
- 	c.line(width/50,height-7*(height/25),width-width/50,height-7*(height/25))
-	c.drawString(width/48,height+height/180-7*(height/25), "Defenses on Field")
-	i=1
-	c.setFont("Helvetica",11)
-	while i<=numberOfMatches:
- 		c.drawString(width/48+i*width/6,height+height/180-7*(height/25),str(teams[team][i-1]["Defenses on Field"]))
- 		i+=1
-def lowBar():
- 	c.line(width/50,height-8*(height/25),width-width/50,height-8*(height/25))
-	c.drawString(width/48,height+height/180-8*(height/25), "Low Bar")
-	i=1
-	while i<=numberOfMatches:
- 		c.drawString(width/48+i*width/6,height+height/180-8*(height/25),str(teams[team][i-1]["Difficulty to Cross LB"]).strip('[]'))
- 		i+=1
-def port():
- 	c.line(width/50,height-9*(height/25),width-width/50,height-9*(height/25))
-	c.drawString(width/48,height+height/180-9*(height/25), "Portcullis")
-	i=1
-	while i<=numberOfMatches:
-		if teams[team][i-1].get("Difficulty to Cross PC") == None:
-			c.drawString(width/48+i*width/6,height+height/180-9*(height/25),"N/A")
-		else:
- 			c.drawString(width/48+i*width/6,height+height/180-9*(height/25),str(teams[team][i-1]["Difficulty to Cross PC"]).strip('[]'))
- 		i+=1	
-def cheval():
- 	c.line(width/50,height-10*(height/25),width-width/50,height-10*(height/25))
-	c.drawString(width/48,height+height/180-10*(height/25), "Cheavl")
-	i=1
-	while i<=numberOfMatches:
-		if teams[team][i-1].get("Difficulty to Cross CF") == None:
- 			c.drawString(width/48+i*width/6,height+height/180-10*(height/25),"N/A")
+	c.drawString(width/28,height+height/180-height/25, "Matches")
+	print totalMatches
+	i = 0
+	# for i in range(totalMatches):
+	while i < totalMatches:
+ 		c.line(width/40+(i+1)*(width/6),height/50,width/40+(i+1)*(width/6),height-height/50)
+ 		if i>3 and totalMatches>4:
+ 			c2.line(width/40+(i-3)*(width/6),height/50,width/40+(i-3)*(width/6),height-height/50)
+ 			c2.drawString(width/28+(i-3)*(width/6),height+height/180-height/25,str(teams[team][i]["Match Number"][0]))
  		else:
- 			c.drawString(width/48+i*width/6,height+height/180-10*(height/25),str(teams[team][i-1]["Difficulty to Cross CF"]).strip('[]'))
- 		i+=1
-def moat():
- 	c.line(width/50,height-11*(height/25),width-width/50,height-11*(height/25))
-	c.drawString(width/48,height+height/180-11*(height/25), "Moat")
-	i=1
-	while i<=numberOfMatches:
-		if teams[team][i-1].get("Difficulty to Cross M") == None:
- 			c.drawString(width/48+i*width/6,height+height/180-11*(height/25),"N/A")
- 		else:
- 			c.drawString(width/48+i*width/6,height+height/180-11*(height/25),str(teams[team][i-1]["Difficulty to Cross M"]).strip('[]'))
- 		i+=1		
-def ramparts():
- 	c.line(width/50,height-12*(height/25),width-width/50,height-12*(height/25))
-	c.drawString(width/48,height+height/180-12*(height/25), "Ramparts")
-	i=1
-	while i<=numberOfMatches:
-		if teams[team][i-1].get("Difficulty to Cross RP") == None:
- 			c.drawString(width/48+i*width/6,height+height/180-12*(height/25),"N/A")
- 		else:
- 			c.drawString(width/48+i*width/6,height+height/180-12*(height/25),str(teams[team][i-1]["Difficulty to Cross RP"]).strip('[]'))
- 		i+=1
-def draw():
- 	c.line(width/50,height-13*(height/25),width-width/50,height-13*(height/25))
-	c.drawString(width/48,height+height/180-13*(height/25), "Drawbridge")
-	i=1
-	while i<=numberOfMatches:
-		if teams[team][i-1].get("Difficulty to Cross DB") == None:
- 			c.drawString(width/48+i*width/6,height+height/180-13*(height/25),"N/A")
- 		else:
- 			c.drawString(width/48+i*width/6,height+height/180-13*(height/25),str(teams[team][i-1]["Difficulty to Cross DB"]).strip('[]'))
- 		i+=1
-def sally():
- 	c.line(width/50,height-14*(height/25),width-width/50,height-14*(height/25))
-	c.drawString(width/48,height+height/180-14*(height/25), "Sallyport")
-	i=1
-	while i<=numberOfMatches:
-		if teams[team][i-1].get("Difficulty to Cross SP") == None:
- 			c.drawString(width/48+i*width/6,height+height/180-14*(height/25),"N/A")
- 		else:
- 			c.drawString(width/48+i*width/6,height+height/180-14*(height/25),str(teams[team][i-1]["Difficulty to Cross SP"]).strip('[]'))
- 		i+=1
-def rock():
- 	c.line(width/50,height-15*(height/25),width-width/50,height-15*(height/25))
-	c.drawString(width/48,height+height/180-15*(height/25), "Rock Wall")
-	i=1
-	while i<=numberOfMatches:
-		if teams[team][i-1].get("Difficulty to Cross RW") == None:
- 			c.drawString(width/48+i*width/6,height+height/180-15*(height/25),"N/A")
- 		else:
- 			c.drawString(width/48+i*width/6,height+height/180-15*(height/25),str(teams[team][i-1]["Difficulty to Cross RW"]).strip('[]'))
- 		i+=1
-def rough():
- 	c.line(width/50,height-16*(height/25),width-width/50,height-16*(height/25))
-	c.drawString(width/48,height+height/180-16*(height/25), "Rough")
-	i=1
-	while i<=numberOfMatches:
-		if teams[team][i-1].get("Difficulty to Cross RT") == None:
- 			c.drawString(width/48+i*width/6,height+height/180-16*(height/25),"N/A")
- 		else:
- 			c.drawString(width/48+i*width/6,height+height/180-16*(height/25),str(teams[team][i-1]["Difficulty to Cross RT"]).strip('[]'))
- 		i+=1
-def spyZone():
- 	c.line(width/50,height-17*(height/25),width-width/50,height-17*(height/25))
-	c.drawString(width/48,height+height/180-17*(height/25), "Spy Zone")
-	i=1
-	while i<=numberOfMatches:
- 		c.drawString(width/48+i*width/6,height+height/180-17*(height/25),str(teams[team][i-1]["Spy Zone"]))
- 		i+=1
-def teleopHighShots():
-	c.line(width/50,height-18*(height/25),width-width/50,height-18*(height/25))
-	c.drawString(width/48,height+height/180-18*(height/25), "Teleop High")
-	i=1
-	while i<=numberOfMatches:
- 		c.drawString(width/48+i*width/6,height+height/180-18*(height/25),str(teams[team][i-1]["Teleop High Goal Shots"]).strip('[]'))
- 		i+=1
-def teleopLowShots():
-	c.line(width/50,height-19*(height/25),width-width/50,height-19*(height/25))
-	c.drawString(width/48,height+height/180-19*(height/25), "Teleop Low")
-	i=1
-	while i<=numberOfMatches:
- 		c.drawString(width/48+i*width/6,height+height/180-19*(height/25),str(teams[team][i-1]["Teleop Low Goal Shots"]).strip('[]'))
- 		i+=1
-def defense():
-	c.line(width/50,height-20*(height/25),width-width/50,height-20*(height/25))
-	c.drawString(width/48,height+height/180-20*(height/25), "Defense")
-	i=1
-	while i<=numberOfMatches:
- 		c.drawString(width/48+i*width/6,height+height/180-20*(height/25),str(teams[team][i-1]["Play Defense"]))
- 		i+=1
-if numberOfMatches > 6:
-	def drawTable():
+			c.drawString(width/28+(i+1)*(width/6),height+height/180-height/25,str(teams[team][i]["Match Number"][0]))
+		print i
+		i+=1
+	if totalMatches > 4:
 		c2.rect(width/50,height/50,width-width/25,height-height/25, fill=0)
 		c2.line(width/50,height-height/25,width-width/50,height-height/25)
-		c2.drawString(width/48,height+height/180-height/25, "Matches")
-		i=5
-		while i<=totalMatches:
-	 		c2.line(width/48+i*(width/6),height/50,width/48+i*(width/6),height-height/50)
-	 		c2.drawString(width/48+i*width/6,height+height/180-height/25,str(teams[team][i-1]["Match Number"][0]))
-	 		i+=1
-	 	c.line(width/48+i*(width/6),height/50,width/48+i*(width/6),height-height/50)
-	def scouterName():
-	 	c2.line(width/50,height-2*(height/25),width-width/50,height-2*(height/25))
-		c2.drawString(width/48,height+height/180-2*(height/25), "Scouter Name")
-		i=5
-		while i<=totalMatches:
-	 		c2.drawString(width/48+i*width/6,height+height/180-2*(height/25),str(teams[team][i-1]["Scouter Name"]))
-	 		i+=1
-	def points():
-	 	c2.line(width/50,height-3*(height/25),width-width/50,height-3*(height/25))
-		c2.drawString(width/48,height+height/180-3*(height/25), "Total Points")
-		i=5
-		while i<=totalMatches:
-	 		c2.drawString(width/48+i*width/6,height+height/180-3*(height/25),str(teams[team][i-1]["Total Points"][0]))
-	 		i+=1
-	def autoHighShots():
-	 	c2.line(width/50,height-4*(height/25),width-width/50,height-4*(height/25))
-		c2.drawString(width/48,height+height/180-4*(height/25), "Auto High")
-		i=5
-		while i<=totalMatches:
-	 		c2.drawString(width/48+i*width/6,height+height/180-4*(height/25),str(teams[team][i-1]["Auto High Goal Shots"]).strip('[]'))
-	 		i+=1
-	def autoLowShots():
-	 	c2.line(width/50,height-5*(height/25),width-width/50,height-5*(height/25))
-		c2.drawString(width/48,height+height/180-5*(height/25), "Auto Low")
-		i=5
-		while i<=totalMatches:
-	 		c2.drawString(width/48+i*width/6,height+height/180-5*(height/25),str(teams[team][i-1]["Auto Low Goal Shots"]).strip('[]'))
-	 		i+=1
-	def autoCross():
-	 	c2.line(width/50,height-6*(height/25),width-width/50,height-6*(height/25))
-		c2.drawString(width/48,height+height/180-6*(height/25), "Auto Defense")
-		i=5
-		while i<=totalMatches:
-	 		c2.drawString(width/48+i*width/6,height+height/180-6*(height/25),str(teams[team][i-1]["Auto Crosses Defense"]))
-	 		i+=1
-	def defensesOnField():
-	 	c2.line(width/50,height-7*(height/25),width-width/50,height-7*(height/25))
-		c2.drawString(width/48,height+height/180-7*(height/25), "Defenses on Field")
-		i=5
-		c2.setFont("Helvetica",11)
-		while i<=totalMatches:
-	 		c2.drawString(width/48+i*width/6,height+height/180-7*(height/25),str(teams[team][i-1]["Defenses on Field"]))
-	 		i+=1
-	def lowBar():
-	 	c2.line(width/50,height-8*(height/25),width-width/50,height-8*(height/25))
-		c2.drawString(width/48,height+height/180-8*(height/25), "Low Bar")
-		i=5
-		while i<=totalMatches:
-	 		c2.drawString(width/48+i*width/6,height+height/180-8*(height/25),str(teams[team][i-1]["Difficulty to Cross LB"]).strip('[]'))
-	 		i+=1
-	def port():
-	 	c2.line(width/50,height-9*(height/25),width-width/50,height-9*(height/25))
-		c2.drawString(width/48,height+height/180-9*(height/25), "Portcullis")
-		i=5
-		while i<=totalMatches:
-			if teams[team][i-1].get("Difficulty to Cross PC") == None:
-				c2.drawString(width/48+i*width/6,height+height/180-9*(height/25),"N/A")
+		c2.drawString(width/28,height+height/180-height/25, "Matches")
+		c2.line(width/40+(i+1)*(width/6),height/50,width/40+(i+1)*(width/6),height-height/50)
+		c2.line(width/40+(i-3)*(width/6),height/50,width/40+(i-3)*(width/6),height-height/50)
+	 	# c2.line(width/40+i*(width/6),height/50,width/40+i*(width/6),height-height/50)
+	c.line(width/40+(i+1)*(width/6),height/50,width/40+(i+1)*(width/6),height-height/50)
+ 	c.line(width/40+i*(width/6),height/50,width/40+i*(width/6),height-height/50)
+def scouterName():
+ 	c.line(width/50,height-2*(height/25),width-width/50,height-2*(height/25))
+	c.drawString(width/28,height+height/180-2*(height/25), "Scouter Name")
+	if totalMatches > 4:
+		c2.line(width/50,height-2*(height/25),width-width/50,height-2*(height/25))
+		c2.drawString(width/28,height+height/180-2*(height/25), "Scouter Name")
+	for i in range(totalMatches):
+ 		if i>3 and totalMatches>4:
+ 			c2.drawString(width/28+(i-3)*width/6,height+height/180-2*(height/25),str(teams[team][i]["Scouter Name"]))
+ 		else:
+ 			c.drawString(width/28+(i+1)*width/6,height+height/180-2*(height/25),str(teams[team][i]["Scouter Name"]))
+def points():
+ 	c.line(width/50,height-3*(height/25),width-width/50,height-3*(height/25))
+	c.drawString(width/28,height+height/180-3*(height/25), "Total Points")
+	if totalMatches > 4:
+ 		c2.line(width/50,height-3*(height/25),width-width/50,height-3*(height/25))
+		c2.drawString(width/28,height+height/180-3*(height/25), "Total Points")
+	for i in range(totalMatches):
+ 		if i>3 and totalMatches>4:
+ 			c2.drawString(width/28+(i-3)*width/6,height+height/180-3*(height/25),str(teams[team][i]["Total Points"][0]))
+ 		else:
+ 			c.drawString(width/28+(i+1)*width/6,height+height/180-3*(height/25),str(teams[team][i]["Total Points"][0]))
+def autoHighShots():
+ 	c.line(width/50,height-4*(height/25),width-width/50,height-4*(height/25))
+	c.drawString(width/28,height+height/180-4*(height/25), "Auto High")
+	if totalMatches > 4:
+		c2.line(width/50,height-4*(height/25),width-width/50,height-4*(height/25))
+		c2.drawString(width/28,height+height/180-4*(height/25), "Auto High")
+	for i in range(totalMatches):
+ 		if i>3 and totalMatches>4:
+ 			c2.drawString(width/28+(i-3)*width/6,height+height/180-4*(height/25),str(teams[team][i]["Auto High Goal Shots"]).strip('[]')) 
+ 		else:
+ 			c.drawString(width/28+(i+1)*width/6,height+height/180-4*(height/25),str(teams[team][i]["Auto High Goal Shots"]).strip('[]'))
+def autoLowShots():
+ 	c.line(width/50,height-5*(height/25),width-width/50,height-5*(height/25))
+	c.drawString(width/28,height+height/180-5*(height/25), "Auto Low")
+	if totalMatches > 4:
+ 		c2.line(width/50,height-5*(height/25),width-width/50,height-5*(height/25))
+		c2.drawString(width/28,height+height/180-5*(height/25), "Auto Low")
+	for i in range(totalMatches):
+ 		if i>3 and totalMatches>4:
+ 			c2.drawString(width/28+(i-3)*width/6,height+height/180-5*(height/25),str(teams[team][i]["Auto Low Goal Shots"]).strip('[]'))
+ 		else:
+ 			c.drawString(width/28+(i+1)*width/6,height+height/180-5*(height/25),str(teams[team][i]["Auto Low Goal Shots"]).strip('[]'))
+def autoCross():
+ 	c.line(width/50,height-6*(height/25),width-width/50,height-6*(height/25))
+	c.drawString(width/28,height+height/180-6*(height/25), "Auto Defense")
+	if totalMatches > 4:
+		c2.line(width/50,height-6*(height/25),width-width/50,height-6*(height/25))
+		c2.drawString(width/28,height+height/180-6*(height/25), "Auto Defense")
+	for i in range(totalMatches):
+ 		if i>3 and totalMatches>4:
+ 			c2.drawString(width/28+(i-3)*width/6,height+height/180-6*(height/25),str(teams[team][i]["Auto Crosses Defense"]))
+ 		else:
+ 			c.drawString(width/28+(i+1)*width/6,height+height/180-6*(height/25),str(teams[team][i]["Auto Crosses Defense"]))
+def defensesOnField():
+ 	c.line(width/50,height-7*(height/25),width-width/50,height-7*(height/25))
+	c.drawString(width/28,height+height/180-7*(height/25), "Defenses on Field")
+	if totalMatches > 4:
+		c2.line(width/50,height-7*(height/25),width-width/50,height-7*(height/25))
+		c2.drawString(width/28,height+height/180-7*(height/25), "Defenses on Field")
+	for i in range(totalMatches):
+ 		if i>3 and totalMatches>4:
+ 			c2.drawString(width/28+(i-3)*width/6,height+height/180-7*(height/25),str(teams[team][i]["Defenses on Field"]))
+ 		else:
+ 			c.drawString(width/28+(i+1)*width/6,height+height/180-7*(height/25),str(teams[team][i]["Defenses on Field"]))
+def lowBar():
+ 	c.line(width/50,height-8*(height/25),width-width/50,height-8*(height/25))
+	c.drawString(width/28,height+height/180-8*(height/25), "Low Bar")
+	if totalMatches > 4:
+ 		c2.line(width/50,height-8*(height/25),width-width/50,height-8*(height/25))
+		c2.drawString(width/28,height+height/180-8*(height/25), "Low Bar")
+	for i in range(totalMatches):
+ 		if i>3 and totalMatches>4:
+ 			c2.drawString(width/28+(i-3)*width/6,height+height/180-8*(height/25),str(teams[team][i]["Difficulty to Cross LB"]).strip('[]'))
+ 		else:
+ 			c.drawString(width/28+(i+1)*width/6,height+height/180-8*(height/25),str(teams[team][i]["Difficulty to Cross LB"]).strip('[]'))
+def port():
+ 	c.line(width/50,height-9*(height/25),width-width/50,height-9*(height/25))
+	c.drawString(width/28,height+height/180-9*(height/25), "Portcullis")
+	if totalMatches > 4:
+ 		c2.line(width/50,height-9*(height/25),width-width/50,height-9*(height/25))
+		c2.drawString(width/28,height+height/180-9*(height/25), "Portcullis")
+	for i in range(totalMatches):
+		if i>3 and totalMatches>4:
+ 			if teams[team][i].get("Difficulty to Cross PC") == None:
+				c2.drawString(width/28+(i-3)*width/6,height+height/180-9*(height/25),"N/A")
 			else:
-	 			c2.drawString(width/48+i*width/6,height+height/180-9*(height/25),str(teams[team][i-1]["Difficulty to Cross PC"]).strip('[]'))
-	 		i+=1	
-	def cheval():
-	 	c2.line(width/50,height-10*(height/25),width-width/50,height-10*(height/25))
-		c2.drawString(width/48,height+height/180-10*(height/25), "Cheavl")
-		i=5
-		while i<=totalMatches:
-			if teams[team][i-1].get("Difficulty to Cross CF") == None:
-	 			c2.drawString(width/48+i*width/6,height+height/180-10*(height/25),"N/A")
+	 			c2.drawString(width/28+(i-3)*width/6,height+height/180-9*(height/25),str(teams[team][i]["Difficulty to Cross PC"]).strip('[]'))
+ 		else:
+ 			if teams[team][i].get("Difficulty to Cross PC") == None:
+				c.drawString(width/28+(i+1)*width/6,height+height/180-9*(height/25),"N/A")
+			else:
+	 			c.drawString(width/28+(i+1)*width/6,height+height/180-9*(height/25),str(teams[team][i]["Difficulty to Cross PC"]).strip('[]'))
+def cheval():
+ 	c.line(width/50,height-10*(height/25),width-width/50,height-10*(height/25))
+	c.drawString(width/28,height+height/180-10*(height/25), "Cheavl")
+	if totalMatches > 4:
+		c2.line(width/50,height-10*(height/25),width-width/50,height-10*(height/25))
+		c2.drawString(width/28,height+height/180-10*(height/25), "Cheavl")
+	for i in range(totalMatches):
+ 		for i in range(len(teams[team])):
+			if i>3 and totalMatches>4:
+	 			if teams[team][i].get("Difficulty to Cross CF") == None:
+ 					c2.drawString(width/28+(i-3)*width/6,height+height/180-10*(height/25),"N/A")
+ 				else:
+ 					c2.drawString(width/28+(i-3)*width/6,height+height/180-10*(height/25),str(teams[team][i]["Difficulty to Cross CF"]).strip('[]'))
 	 		else:
-	 			c2.drawString(width/48+i*width/6,height+height/180-10*(height/25),str(teams[team][i-1]["Difficulty to Cross CF"]).strip('[]'))
-	 		i+=1
-	def moat():
-	 	c2.line(width/50,height-11*(height/25),width-width/50,height-11*(height/25))
-		c2.drawString(width/48,height+height/180-11*(height/25), "Moat")
-		i=5
-		while i<=totalMatches:
-			if teams[team][i-1].get("Difficulty to Cross M") == None:
-	 			c2.drawString(width/48+i*width/6,height+height/180-11*(height/25),"N/A")
-	 		else:
-	 			c2.drawString(width/48+i*width/6,height+height/180-11*(height/25),str(teams[team][i-1]["Difficulty to Cross M"]).strip('[]'))
-	 		i+=1		
-	def ramparts():
-	 	c2.line(width/50,height-12*(height/25),width-width/50,height-12*(height/25))
-		c2.drawString(width/48,height+height/180-12*(height/25), "Ramparts")
-		i=5
-		while i<=totalMatches:
-			if teams[team][i-1].get("Difficulty to Cross RP") == None:
-	 			c2.drawString(width/48+i*width/6,height+height/180-12*(height/25),"N/A")
-	 		else:
-	 			c2.drawString(width/48+i*width/6,height+height/180-12*(height/25),str(teams[team][i-1]["Difficulty to Cross RP"]).strip('[]'))
-	 		i+=1
-	def draw():
-	 	c2.line(width/50,height-13*(height/25),width-width/50,height-13*(height/25))
-		c2.drawString(width/48,height+height/180-13*(height/25), "Drawbridge")
-		i=5
-		while i<=totalMatches:
-			if teams[team][i-1].get("Difficulty to Cross DB") == None:
-	 			c2.drawString(width/48+i*width/6,height+height/180-13*(height/25),"N/A")
-	 		else:
-	 			c2.drawString(width/48+i*width/6,height+height/180-13*(height/25),str(teams[team][i-1]["Difficulty to Cross DB"]).strip('[]'))
-	 		i+=1
-	def sally():
-	 	c2.line(width/50,height-14*(height/25),width-width/50,height-14*(height/25))
-		c2.drawString(width/48,height+height/180-14*(height/25), "Sallyport")
-		i=5
-		while i<=totalMatches:
-			if teams[team][i-1].get("Difficulty to Cross SP") == None:
-	 			c2.drawString(width/48+i*width/6,height+height/180-14*(height/25),"N/A")
-	 		else:
-	 			c2.drawString(width/48+i*width/6,height+height/180-14*(height/25),str(teams[team][i-1]["Difficulty to Cross SP"]).strip('[]'))
-	 		i+=1
-	def rock():
-	 	c2.line(width/50,height-15*(height/25),width-width/50,height-15*(height/25))
-		c2.drawString(width/48,height+height/180-15*(height/25), "Rock Wall")
-		i=5
-		while i<=totalMatches:
-			if teams[team][i-1].get("Difficulty to Cross RW") == None:
-	 			c2.drawString(width/48+i*width/6,height+height/180-15*(height/25),"N/A")
-	 		else:
-	 			c2.drawString(width/48+i*width/6,height+height/180-15*(height/25),str(teams[team][i-1]["Difficulty to Cross RW"]).strip('[]'))
-	 		i+=1
-	def rough():
-	 	c2.line(width/50,height-16*(height/25),width-width/50,height-16*(height/25))
-		c2.drawString(width/48,height+height/180-16*(height/25), "Rough")
-		i=5
-		while i<=totalMatches:
-			if teams[team][i-1].get("Difficulty to Cross RT") == None:
-	 			c2.drawString(width/48+i*width/6,height+height/180-16*(height/25),"N/A")
-	 		else:
-	 			c2.drawString(width/48+i*width/6,height+height/180-16*(height/25),str(teams[team][i-1]["Difficulty to Cross RT"]).strip('[]'))
-	 		i+=1
-	def spyZone():
-	 	c2.line(width/50,height-17*(height/25),width-width/50,height-17*(height/25))
-		c2.drawString(width/48,height+height/180-17*(height/25), "Spy Zone")
-		i=5
-		while i<=totalMatches:
-	 		c2.drawString(width/48+i*width/6,height+height/180-17*(height/25),str(teams[team][i-1]["Spy Zone"]))
-	 		i+=1
-	def teleopHighShots():
+	 			if teams[team][i].get("Difficulty to Cross CF") == None:
+ 					c.drawString(width/28+(i+1)*width/6,height+height/180-10*(height/25),"N/A")
+ 				else:
+ 					c.drawString(width/28+(i+1)*width/6,height+height/180-10*(height/25),str(teams[team][i]["Difficulty to Cross CF"]).strip('[]'))
+def moat():
+ 	c.line(width/50,height-11*(height/25),width-width/50,height-11*(height/25))
+	c.drawString(width/28,height+height/180-11*(height/25), "Moat")
+	if totalMatches > 4:
+ 		c2.line(width/50,height-11*(height/25),width-width/50,height-11*(height/25))
+		c2.drawString(width/28,height+height/180-11*(height/25), "Moat")
+	for i in range(totalMatches):
+		if i>3 and totalMatches>4:
+ 			if teams[team][i].get("Difficulty to Cross M") == None:
+ 				c2.drawString(width/28+(i-3)*width/6,height+height/180-11*(height/25),"N/A")
+ 			else:	
+ 				c2.drawString(width/28+(i-3)*width/6,height+height/180-11*(height/25),str(teams[team][i]["Difficulty to Cross M"]).strip('[]'))
+ 		else:
+ 			if teams[team][i].get("Difficulty to Cross M") == None:
+ 				c.drawString(width/28+(i+1)*width/6,height+height/180-11*(height/25),"N/A")
+ 			else:
+ 				c.drawString(width/28+(i+1)*width/6,height+height/180-11*(height/25),str(teams[team][i]["Difficulty to Cross M"]).strip('[]'))		
+def ramparts():
+ 	c.line(width/50,height-12*(height/25),width-width/50,height-12*(height/25))
+	c.drawString(width/28,height+height/180-12*(height/25), "Ramparts")
+	if totalMatches > 4:
+		c2.line(width/50,height-12*(height/25),width-width/50,height-12*(height/25))
+		c2.drawString(width/28,height+height/180-12*(height/25), "Ramparts")
+	for i in range(totalMatches):
+ 		if i>3 and totalMatches>4:
+ 			if teams[team][i].get("Difficulty to Cross RP") == None:
+ 				c2.drawString(width/28+(i-3)*width/6,height+height/180-12*(height/25),"N/A")
+ 			else:
+ 				c2.drawString(width/28+(i-3)*width/6,height+height/180-12*(height/25),str(teams[team][i]["Difficulty to Cross RP"]).strip('[]'))
+ 		else:
+ 			if teams[team][i].get("Difficulty to Cross RP") == None:
+ 				c.drawString(width/28+(i+1)*width/6,height+height/180-12*(height/25),"N/A")
+ 			else:
+ 				c.drawString(width/28+(i+1)*width/6,height+height/180-12*(height/25),str(teams[team][i]["Difficulty to Cross RP"]).strip('[]'))
+def draw():
+ 	c.line(width/50,height-13*(height/25),width-width/50,height-13*(height/25))
+	c.drawString(width/28,height+height/180-13*(height/25), "Drawbridge")
+	if totalMatches > 4:
+ 		c2.line(width/50,height-13*(height/25),width-width/50,height-13*(height/25))
+		c2.drawString(width/28,height+height/180-13*(height/25), "Drawbridge")
+	for i in range(totalMatches):
+		if i>3 and totalMatches>4:
+ 			if teams[team][i].get("Difficulty to Cross DB") == None:
+ 				c2.drawString(width/28+(i-3)*width/6,height+height/180-13*(height/25),"N/A")
+ 			else:
+ 				c2.drawString(width/28+(i-3)*width/6,height+height/180-13*(height/25),str(teams[team][i]["Difficulty to Cross DB"]).strip('[]'))
+ 		else:
+ 			if teams[team][i].get("Difficulty to Cross DB") == None:
+ 				c.drawString(width/28+(i+1)*width/6,height+height/180-13*(height/25),"N/A")
+ 			else:
+ 				c.drawString(width/28+(i+1)*width/6,height+height/180-13*(height/25),str(teams[team][i]["Difficulty to Cross DB"]).strip('[]'))
+def sally():
+ 	c.line(width/50,height-14*(height/25),width-width/50,height-14*(height/25))
+	c.drawString(width/28,height+height/180-14*(height/25), "Sallyport")
+	if totalMatches > 4:
+		c2.line(width/50,height-14*(height/25),width-width/50,height-14*(height/25))
+		c2.drawString(width/28,height+height/180-14*(height/25), "Sallyport")
+	for i in range(totalMatches):
+		if i>3 and totalMatches>4:
+ 			if teams[team][i].get("Difficulty to Cross SP") == None:
+ 				c2.drawString(width/28+(i-3)*width/6,height+height/180-14*(height/25),"N/A")
+ 			else:
+ 				c2.drawString(width/28+(i-3)*width/6,height+height/180-14*(height/25),str(teams[team][i]["Difficulty to Cross SP"]).strip('[]'))
+ 		else:
+ 			if teams[team][i].get("Difficulty to Cross SP") == None:
+ 				c.drawString(width/28+(i+1)*width/6,height+height/180-14*(height/25),"N/A")
+ 			else:
+ 				c.drawString(width/28+(i+1)*width/6,height+height/180-14*(height/25),str(teams[team][i]["Difficulty to Cross SP"]).strip('[]'))
+		
+def rock():
+ 	c.line(width/50,height-15*(height/25),width-width/50,height-15*(height/25))
+	c.drawString(width/28,height+height/180-15*(height/25), "Rock Wall")
+	if totalMatches > 4:
+		c2.line(width/50,height-15*(height/25),width-width/50,height-15*(height/25))
+		c2.drawString(width/28,height+height/180-15*(height/25), "Rock Wall")
+	for i in range(totalMatches):
+		if i>3 and totalMatches>4:
+ 			if teams[team][i].get("Difficulty to Cross RW") == None:
+ 				c2.drawString(width/28+(i-3)*width/6,height+height/180-15*(height/25),"N/A")
+ 			else:
+ 				c2.drawString(width/28+(i-3)*width/6,height+height/180-15*(height/25),str(teams[team][i]["Difficulty to Cross RW"]).strip('[]'))
+ 		else:
+ 			if teams[team][i].get("Difficulty to Cross RW") == None:
+ 				c.drawString(width/28+(i+1)*width/6,height+height/180-15*(height/25),"N/A")
+ 			else:
+ 				c.drawString(width/28+(i+1)*width/6,height+height/180-15*(height/25),str(teams[team][i]["Difficulty to Cross RW"]).strip('[]'))
+def rough():
+ 	c.line(width/50,height-16*(height/25),width-width/50,height-16*(height/25))
+	c.drawString(width/28,height+height/180-16*(height/25), "Rough")
+	if totalMatches > 4:
+		c2.line(width/50,height-16*(height/25),width-width/50,height-16*(height/25))
+		c2.drawString(width/28,height+height/180-16*(height/25), "Rough")
+	for i in range(totalMatches):
+		if i>3 and totalMatches>4:
+ 			if teams[team][i].get("Difficulty to Cross RT") == None:
+ 				c2.drawString(width/28+(i-3)*width/6,height+height/180-16*(height/25),"N/A")
+ 			else:
+ 				c2.drawString(width/28+(i-3)*width/6,height+height/180-16*(height/25),str(teams[team][i]["Difficulty to Cross RT"]).strip('[]'))
+ 		else:
+ 			if teams[team][i].get("Difficulty to Cross RT") == None:
+ 				c.drawString(width/28+(i+1)*width/6,height+height/180-16*(height/25),"N/A")
+ 			else:
+ 				c.drawString(width/28+(i+1)*width/6,height+height/180-16*(height/25),str(teams[team][i]["Difficulty to Cross RT"]).strip('[]'))
+def spyZone():
+ 	c.line(width/50,height-17*(height/25),width-width/50,height-17*(height/25))
+	c.drawString(width/28,height+height/180-17*(height/25), "Spy Zone")
+	if totalMatches > 4:
+		c2.line(width/50,height-17*(height/25),width-width/50,height-17*(height/25))
+		c2.drawString(width/28,height+height/180-17*(height/25), "Spy Zone")
+	for i in range(totalMatches):
+		if i>3 and totalMatches>4:
+ 			c2.drawString(width/28+(i-3)*width/6,height+height/180-17*(height/25),str(teams[team][i]["Spy Zone"]))
+ 		else:
+ 			c.drawString(width/28+(i+1)*width/6,height+height/180-17*(height/25),str(teams[team][i]["Spy Zone"]))
+def teleopHighShots():
+	c.line(width/50,height-18*(height/25),width-width/50,height-18*(height/25))
+	c.drawString(width/28,height+height/180-18*(height/25), "Teleop High")
+	if totalMatches > 4:
 		c2.line(width/50,height-18*(height/25),width-width/50,height-18*(height/25))
-		c2.drawString(width/48,height+height/180-18*(height/25), "Teleop High")
-		i=5
-		while i<=totalMatches:
-	 		c2.drawString(width/48+i*width/6,height+height/180-18*(height/25),str(teams[team][i-1]["Teleop High Goal Shots"]).strip('[]'))
-	 		i+=1
-	def teleopLowShots():
+		c2.drawString(width/28,height+height/180-18*(height/25), "Teleop High")
+	i=1
+	for i in range(totalMatches):
+		if i>3 and totalMatches>4:
+ 			c2.drawString(width/28+(i-3)*width/6,height+height/180-18*(height/25),str(teams[team][i]["Teleop High Goal Shots"]).strip('[]'))
+ 		else:
+ 			c.drawString(width/28+(i+1)*width/6,height+height/180-18*(height/25),str(teams[team][i]["Teleop High Goal Shots"]).strip('[]'))
+def teleopLowShots():
+	c.line(width/50,height-19*(height/25),width-width/50,height-19*(height/25))
+	c.drawString(width/28,height+height/180-19*(height/25), "Teleop Low")
+	if totalMatches > 4:
 		c2.line(width/50,height-19*(height/25),width-width/50,height-19*(height/25))
-		c2.drawString(width/48,height+height/180-19*(height/25), "Teleop Low")
-		i=5
-		while i<=totalMatches:
-	 		c2.drawString(width/48+i*width/6,height+height/180-19*(height/25),str(teams[team][i-1]["Teleop Low Goal Shots"]).strip('[]'))
-	 		i+=1
-	def defense():
+		c2.drawString(width/28,height+height/180-19*(height/25), "Teleop Low")
+	for i in range(totalMatches):
+		if i>3 and totalMatches>4:
+ 			c2.drawString(width/28+(i-3)*width/6,height+height/180-19*(height/25),str(teams[team][i]["Teleop Low Goal Shots"]).strip('[]'))
+ 		else:
+ 			c.drawString(width/28+(i+1)*width/6,height+height/180-19*(height/25),str(teams[team][i]["Teleop Low Goal Shots"]).strip('[]'))
+def defense():
+	c.line(width/50,height-20*(height/25),width-width/50,height-20*(height/25))
+	c.drawString(width/28,height+height/180-20*(height/25), "Defense")
+	if totalMatches > 4:
 		c2.line(width/50,height-20*(height/25),width-width/50,height-20*(height/25))
-		c2.drawString(width/48,height+height/180-20*(height/25), "Defense")
-		i=5
-		while i<=totalMatches:
-	 		c2.drawString(width/48+i*width/6,height+height/180-20*(height/25),str(teams[team][i-1]["Play Defense"]))
-	 		i+=1
+		c2.drawString(width/28,height+height/180-20*(height/25), "Defense")		
+	for i in range(totalMatches):
+ 		if i>3 and totalMatches>4:
+ 			c2.drawString(width/28+(i-3)*width/6,height+height/180-20*(height/25),str(teams[team][i]["Play Defense"]))
+ 		else:
+ 			c.drawString(width/28+(i+1)*width/6,height+height/180-20*(height/25),str(teams[team][i]["Play Defense"]))
+ 		print i
+def form2():
+	c2.rect(width/50,height/50,width-width/25,height-height/25, fill=0)
+	c2.line(width/50,height-height/25,width-width/50,height-height/25)
+	c2.drawString(width/28,height+height/180-height/25, "Matches")
+ 	c2.line(width/50,height-2*(height/25),width-width/50,height-2*(height/25))
+	c2.drawString(width/28,height+height/180-2*(height/25), "Scouter Name")
+ 	c2.line(width/50,height-3*(height/25),width-width/50,height-3*(height/25))
+	c2.drawString(width/28,height+height/180-3*(height/25), "Total Points")
+ 	c2.line(width/50,height-4*(height/25),width-width/50,height-4*(height/25))
+	c2.drawString(width/28,height+height/180-4*(height/25), "Auto High")
+ 	c2.line(width/50,height-5*(height/25),width-width/50,height-5*(height/25))
+	c2.drawString(width/28,height+height/180-5*(height/25), "Auto Low")
+ 	c2.line(width/50,height-6*(height/25),width-width/50,height-6*(height/25))
+	c2.drawString(width/28,height+height/180-6*(height/25), "Auto Defense")
+ 	c2.line(width/50,height-7*(height/25),width-width/50,height-7*(height/25))
+	c2.drawString(width/28,height+height/180-7*(height/25), "Defenses on Field")
+ 	c2.line(width/50,height-8*(height/25),width-width/50,height-8*(height/25))
+	c2.drawString(width/28,height+height/180-8*(height/25), "Low Bar")
+ 	c2.line(width/50,height-9*(height/25),width-width/50,height-9*(height/25))
+	c2.drawString(width/28,height+height/180-9*(height/25), "Portcullis")
+ 	c2.line(width/50,height-10*(height/25),width-width/50,height-10*(height/25))
+	c2.drawString(width/28,height+height/180-10*(height/25), "Cheavl")
+ 	c2.line(width/50,height-11*(height/25),width-width/50,height-11*(height/25))
+	c2.drawString(width/28,height+height/180-11*(height/25), "Moat")
+ 	c2.line(width/50,height-12*(height/25),width-width/50,height-12*(height/25))
+	c2.drawString(width/28,height+height/180-12*(height/25), "Ramparts")
+ 	c2.line(width/50,height-13*(height/25),width-width/50,height-13*(height/25))
+	c2.drawString(width/28,height+height/180-13*(height/25), "Drawbridge")
+ 	c2.line(width/50,height-14*(height/25),width-width/50,height-14*(height/25))
+	c2.drawString(width/28,height+height/180-14*(height/25), "Sallyport")
+ 	c2.line(width/50,height-15*(height/25),width-width/50,height-15*(height/25))
+	c2.drawString(width/28,height+height/180-15*(height/25), "Rock Wall")
+ 	c2.line(width/50,height-16*(height/25),width-width/50,height-16*(height/25))
+	c2.drawString(width/28,height+height/180-16*(height/25), "Rough")
+ 	c2.line(width/50,height-17*(height/25),width-width/50,height-17*(height/25))
+	c2.drawString(width/28,height+height/180-17*(height/25), "Spy Zone")
+	c2.line(width/50,height-18*(height/25),width-width/50,height-18*(height/25))
+	c2.drawString(width/28,height+height/180-18*(height/25), "Teleop High")
+	c2.line(width/50,height-19*(height/25),width-width/50,height-19*(height/25))
+	c2.drawString(width/28,height+height/180-19*(height/25), "Teleop Low")
+	c2.line(width/50,height-20*(height/25),width-width/50,height-20*(height/25))
+	c2.drawString(width/28,height+height/180-20*(height/25), "Defense")
 defense()
 teleopLowShots()
 teleopHighShots()
 spyZone()
 rough()
+
 rock()
 sally()
 draw()
@@ -400,6 +398,6 @@ scouterName()
 drawTable()
 c.showPage()
 c.save()
-if totalMatches > 6:
+if totalMatches >= 5:
 	c2.showPage()
 	c2.save()

@@ -1,0 +1,42 @@
+#push one file
+def generatePercentageRankingsTxt():
+	global percentFile
+	percentFile = open("percentFile.txt", "a")
+
+
+def generateTotalsRankingsTxt():
+
+
+
+def generateTotalsData():
+	#auto and general combined!
+
+
+def catagoryRankings():
+	# Percentage Based Rankings:
+	# "Average Difficulty of PC"
+	# "Average Difficulty of CF"
+	# "Average Difficulty of M"
+	# "Average Difficulty of RP"
+	# "Average Difficulty of SP"
+	# "Average Difficulty of DB"
+	# "Average Difficulty of RW"
+	# "Average Difficulty of RT"
+	# "Average Difficulty of LB"
+	# "Proportion of Wins"
+	# "Overall Probability of Scoring High Goals"
+	# "Overall Probability of Scoring Low Goals"
+
+	# Completion Rankings:y
+	# "Average Alliance Match Points"
+	# "Total Successes of High Goals"
+	# "Total Successes to Cross PC"
+	# "Total Successes to Cross CF"
+	# "Total Successes to Cross M"
+	# "Total Successes to Cross RP"
+	# "Total Successes to Cross SP"
+	# "Total Successes to Cross DB"
+	# "Total Successes to Cross RW"
+	# "Total Successes to Cross RT"
+	# "Total Successes to Cross LB"
+	# "Total Successes of Low Goals"

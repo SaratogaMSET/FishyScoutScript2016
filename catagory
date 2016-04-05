@@ -1,0 +1,337 @@
+from reportlab.pdfgen import canvas
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter,A4,landscape
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import inch
+from reportlab.rl_config import defaultPageSize
+from appToScript import *
+
+
+teams = generateDict("oneFile.txt")
+
+# catagoryPercentage = 'Average Alliance Match Points'
+# catagoryOverall = 'Total Successes of Low Goals'
+width , height = letter
+auto = generateAutoDict(teams)
+overall = generateTeamOverall(teams)
+rankings = generateRankings(overall,auto)
+totals = generateTotals(teams,overall)
+totalsRankings = generateTotalsRankings(totals)
+numberOfTeams = len(teams)
+numberOfTeams = 43
+# numberOfTeams = 25
+print numberOfTeams
+# Percentage Based Rankings:
+# "Average Difficulty of PC"
+percentPC = categoricalRankings('Average Difficulty of PC', rankings, totalsRankings) + categoricalRankings('Average Difficulty of PC', rankings, totalsRankings) + categoricalRankings('Average Difficulty of PC', rankings, totalsRankings) + categoricalRankings('Average Difficulty of PC', rankings, totalsRankings)+ categoricalRankings('Average Difficulty of PC', rankings, totalsRankings)+ categoricalRankings('Average Difficulty of PC', rankings, totalsRankings)
+# "Average Difficulty of 
+percentCF = categoricalRankings('Average Difficulty of CF', rankings, totalsRankings)
+# "Average Difficulty of M"
+percentM = categoricalRankings('Average Difficulty of M', rankings, totalsRankings)
+# "Average Difficulty of RP"
+percentRP = categoricalRankings('Average Difficulty of RP', rankings, totalsRankings)
+# "Average Difficulty of SP"
+percentSP = categoricalRankings('Average Difficulty of SP', rankings, totalsRankings)
+# "Average Difficulty of DB"
+percentDB = categoricalRankings('Average Difficulty of DB', rankings, totalsRankings)
+# "Average Difficulty of RW"
+percentRW = categoricalRankings('Average Difficulty of RW', rankings, totalsRankings)
+# "Average Difficulty of RT"
+percentRT = categoricalRankings('Average Difficulty of RT', rankings, totalsRankings)
+# "Average Difficulty of LB"
+percentLB = categoricalRankings('Average Difficulty of LB', rankings, totalsRankings)
+# "Proportion of Wins"
+wins = categoricalRankings("Proportion of Wins", rankings, totalsRankings)
+# "Overall Probability of Scoring High Goals"
+percentHG = categoricalRankings("Overall Probability of Scoring High Goals", rankings, totalsRankings)
+# "Overall Probability of Scoring Low Goals"
+percentLG = categoricalRankings("Overall Probability of Scoring Low Goals", rankings, totalsRankings)
+
+# Completion Rankings
+# "Total Successes to Cross PC"
+totalPC = categoricalRankings("Total Successes to Cross PC", rankings, totalsRankings)
+# "Total Successes to Cross CF"
+totalCF = categoricalRankings("Total Successes to Cross CF", rankings, totalsRankings)
+# "Total Successes to Cross M"
+totalM = categoricalRankings("Total Successes to Cross M", rankings, totalsRankings)
+# "Total Successes to Cross RP"
+totalRP = categoricalRankings("Total Successes to Cross RP", rankings, totalsRankings)
+# "Total Successes to Cross SP"
+totalSP = categoricalRankings("Total Successes to Cross SP", rankings, totalsRankings)
+# "Total Successes to Cross DB"
+totalDB = categoricalRankings("Total Successes to Cross DB", rankings, totalsRankings)
+# "Total Successes to Cross RW"
+totalRW = categoricalRankings("Total Successes to Cross RW", rankings, totalsRankings)
+# "Total Successes to Cross RT"
+totalRT = categoricalRankings("Total Successes to Cross RT", rankings, totalsRankings)
+# "Total Successes to Cross LB"
+totalLB = categoricalRankings("Total Successes to Cross LB", rankings, totalsRankings)
+# "Average Alliance Match Points"
+points = categoricalRankings("Average Alliance Match Points", rankings, totalsRankings)
+# "Total Successes of High Goals"
+totalHG = categoricalRankings("Total Successes of High Goals", rankings, totalsRankings)
+# "Total Successes of Low Goals"
+totalLG = categoricalRankings("Total Successes of Low Goals", rankings, totalsRankings)
+
+	
+if numberOfTeams < 20:
+	lines = 1
+elif numberOfTeams < 44:
+	lines = 2
+else:
+	lines = 3
+
+print rankings
+print totalsRankings
+
+c = canvas.Canvas( "CatagoryRankingsPercentage.pdf",pagesize = letter)
+c2 = canvas.Canvas( "CatagoryRankingsTotals.pdf",pagesize = letter)
+def header():
+	c.line(0,height-height/20,width,height-height/20)
+	c.setFont("Helvetica",20)
+	c.drawString(width/45,height-height/25, "Catagory Rankings Percentage")
+def drawPercentage():
+	# c.drawString(width/45,height-2*(height/25), "totalage Rankings ")
+	# c.line(width,(height-(height/20))/2, 0,(height-(height/20))/2)
+	c.setFont("Helvetica",11)
+	if lines == 1:
+		c.drawString(width/45,height-2*(height/25),"PC Percentage: " + ','.join(percentPC[0:len(percentPC)]))
+		print "1"
+	elif lines == 2:
+		c.drawString(width/45,height-2*(height/25),"PC Percentage: " + ','.join(percentPC[0:19]))
+		c.drawString(width/45,height-2.5*(height/25),','.join(percentPC[19:len(percentPC)]))
+		print '2'
+	else:
+		c.drawString(width/45,height-2*(height/25),"PC Percentage: " + ','.join(percentPC[0:19]))
+		c.drawString(width/45,height-2.5*(height/25),','.join(percentPC[19:43]))
+		c.drawString(width/45,height-3*(height/25),','.join(percentPC[43:len(percentPC)]))
+		print "3"
+	if lines == 1:
+		c.drawString(width/45,height-3.5*(height/25),"CF Percentage: " + ','.join(percentCF[0:len(percentCF)]))
+	elif lines == 2:
+		c.drawString(width/45,height-3.5*(height/25),"CF Percentage: " + ','.join(percentCF[0:19]))
+		c.drawString(width/45,height-4*(height/25),','.join(percentCF[19:len(percentCF)]))
+	else:
+		c.drawString(width/45,height-3.5*(height/25),"CF Percentage: " + ','.join(percentCF[0:19]))
+		c.drawString(width/45,height-4*(height/25),','.join(percentCF[19:43]))
+		c.drawString(width/45,height-4.5*(height/25),','.join(percentCF[43:len(percentCF)]))
+	if lines == 1:
+		c.drawString(width/45,height-5*(height/25),"M Percentage: " + ','.join(percentM[0:len(percentM)]))
+	elif lines == 2:
+		c.drawString(width/45,height-5*(height/25),"M Percentage: " + ','.join(percentM[0:19]))
+		c.drawString(width/45,height-5.5*(height/25),','.join(percentM[19:len(percentM)]))
+	else:
+		c.drawString(width/45,height-5*(height/25),"M Percentage: " + ','.join(percentM[0:19]))
+		c.drawString(width/45,height-5.5*(height/25),','.join(percentM[19:43]))
+		c.drawString(width/45,height-6*(height/25),','.join(percentM[43:len(percentM)]))
+	if lines == 1:
+		c.drawString(width/45,height-6.5*(height/25),"RP Percentage: " + ','.join(percentCF[0:len(percentRP)]))
+	elif lines == 2:
+		c.drawString(width/45,height-6.5*(height/25),"RP Percentage: " + ','.join(percentRP[0:19]))
+		c.drawString(width/45,height-7*(height/25),','.join(percentRP[19:len(percentRP)]))
+	else:
+		c.drawString(width/45,height-6.5*(height/25),"RP Percentage: " + ','.join(percentRP[0:19]))
+		c.drawString(width/45,height-7*(height/25),', '.join(percentRP[19:43]))
+		c.drawString(width/45,height-7.5*(height/25),','.join(percentRP[43:len(percentRP)]))
+	if lines == 1:
+		c.drawString(width/45,height-8*(height/25),"SP Percentage: " + ','.join(percentSP[0:len(percentSP)]))
+	elif lines == 2:
+		c.drawString(width/45,height-8*(height/25),"SP Percentage: " + ','.join(percentSP[0:19]))
+		c.drawString(width/45,height-8.5*(height/25),','.join(percentSP[19:len(percentSP)]))
+	else:
+		c.drawString(width/45,height-8*(height/25),"SP Percentage: " + ','.join(percentSP[0:19]))
+		c.drawString(width/45,height-8.5*(height/25),', '.join(percentSP[19:43]))
+		c.drawString(width/45,height-9*(height/25),','.join(percentSP[43:len(percentSP)]))
+	if lines == 1:
+		c.drawString(width/45,height-9.5*(height/25),"DB Percentage: " + ','.join(percentDB[0:len(percentDB)]))
+	elif lines == 2:
+		c.drawString(width/45,height-9.5*(height/25),"DB Percentage: " + ','.join(percentDB[0:19]))
+		c.drawString(width/45,height-10*(height/25),','.join(percentDB[19:len(percentDB)]))
+	else:
+		c.drawString(width/45,height-9.5*(height/25),"DB Percentage: " + ','.join(percentDB[0:19]))
+		c.drawString(width/45,height-10*(height/25),', '.join(percentDB[19:43]))
+		c.drawString(width/45,height-10.5*(height/25),','.join(percentDB[43:len(percentDB)]))
+	if lines == 1:
+		c.drawString(width/45,height-11*(height/25),"RW Percentage: " + ','.join(percentRW[0:len(percentRW)]))
+	elif lines == 2:
+		c.drawString(width/45,height-11*(height/25),"RW Percentage: " + ','.join(percentRW[0:19]))
+		c.drawString(width/45,height-11.5*(height/25),','.join(percentRW[19:len(percentRW)]))
+	else:
+		c.drawString(width/45,height-11*(height/25),"RW Percentage: " + ','.join(percentRW[0:19]))
+		c.drawString(width/45,height-11.5*(height/25),', '.join(percentRW[19:43]))
+		c.drawString(width/45,height-12*(height/25),','.join(percentRW[43:len(percentRW)]))
+	if lines == 1:
+		c.drawString(width/45,height-12.5*(height/25),"RT Percentage: " + ','.join(percentRT[0:len(percentRT)]))
+	elif lines == 2:
+		c.drawString(width/45,height-12.5*(height/25),"RT Percentage: " + ','.join(percentRT[0:19]))
+		c.drawString(width/45,height-13*(height/25),','.join(percentRT[19:len(percentRT)]))
+	else:
+		c.drawString(width/45,height-12.5*(height/25),"RT Percentage: " + ','.join(percentRT[0:19]))
+		c.drawString(width/45,height-13*(height/25),', '.join(percentRT[19:43]))
+		c.drawString(width/45,height-13.5*(height/25),','.join(percentRT[43:len(percentRT)]))
+	if lines == 1:
+		c.drawString(width/45,height-14*(height/25),"LB Percentage: " + ','.join(percentLB[0:len(percentLB)]))
+	elif lines == 2:
+		c.drawString(width/45,height-14*(height/25),"LB Percentage: " + ','.join(percentLB[0:19]))
+		c.drawString(width/45,height-14.5*(height/25),','.join(percentLB[19:len(percentLB)]))
+	else:
+		c.drawString(width/45,height-14*(height/25),"LB Percentage: " + ','.join(percentLB[0:19]))
+		c.drawString(width/45,height-14.5*(height/25),', '.join(percentLB[19:43]))
+		c.drawString(width/45,height-15*(height/25),','.join(percentLB[43:len(percentLB)]))
+	if lines == 1:
+		c.drawString(width/45,height-15.5*(height/25),"Wins: " + ','.join(wins[0:len(wins)]))
+	elif lines == 2:
+		c.drawString(width/45,height-15.5*(height/25),"Wins: " + ','.join(wins[0:19]))
+		c.drawString(width/45,height-16*(height/25),','.join(wins[19:len(wins)]))
+	else:
+		c.drawString(width/45,height-15.5*(height/25),"Wins: " + ','.join(wins[0:19]))
+		c.drawString(width/45,height-16*(height/25),', '.join(wins[19:43]))
+		c.drawString(width/45,height-16.5*(height/25),','.join(wins[43:len(wins)]))
+	if lines == 1:
+		c.drawString(width/45,height-19*(height/25),"High Goal Percent: " + ','.join(percentHG[0:len(percentHG)]))
+	elif lines == 2:
+		c.drawString(width/45,height-19*(height/25),"High Goal Percent: " + ','.join(percentHG[0:19]))
+		c.drawString(width/45,height-19.5*(height/25),','.join(percentHG[19:len(percentHG)]))
+	else:
+		c.drawString(width/45,height-19*(height/25),"High Goal Percent: " + ','.join(percentHG[0:19]))
+		c.drawString(width/45,height-19.5*(height/25),', '.join(percentHG[19:43]))
+		c.drawString(width/45,height-18*(height/25),','.join(percentHG[43:len(percentHG)]))
+	if lines == 1:
+		c.drawString(width/45,height-18.5*(height/25),"Low Goal Percent: " + ','.join(percentLG[0:len(percentLG)]))
+	elif lines == 2:
+		c.drawString(width/45,height-18.5*(height/25),"Low Goal Percent: " + ','.join(percentLG[0:19]))
+		c.drawString(width/45,height-19*(height/25),','.join(percentLG[19:len(percentLG)]))
+	else:
+		c.drawString(width/45,height-18.5*(height/25),"Low Goal Percent: " + ','.join(percentLG[0:19]))
+		c.drawString(width/45,height-19*(height/25),', '.join(percentLG[19:43]))
+		c.drawString(width/45,height-19.5*(height/25),','.join(percentLG[43:len(percentLG)]))
+
+
+def drawTotals():
+	c2.line(0,height-height/20,width,height-height/20)
+	c2.setFont("Helvetica",20)
+	c2.drawString(width/45,height-height/25, "Catagory Rankings Totals")
+	c2.setFont("Helvetica",11)
+	if lines == 1:
+		c2.drawString(width/45,height-2*(height/25),"PC Totals: " + ','.join(totalPC[0:len(totalPC)]))
+	elif lines == 2:
+		c2.drawString(width/45,height-2*(height/25),"PC Totals: " + ','.join(totalPC[0:19]))
+		c2.drawString(width/45,height-2.5*(height/25),','.join(totalPC[19:len(totalPC)]))
+	else:
+		c2.drawString(width/45,height-2*(height/25),"PC Totals: " + ','.join(totalPC[0:19]))
+		c2.drawString(width/45,height-2.5*(height/25),','.join(totalPC[19:43]))
+		c2.drawString(width/45,height-3*(height/25),','.join(totalPC[43:len(totalPC)]))
+	if lines == 1:
+		c2.drawString(width/45,height-3.5*(height/25),"CF Totals: " + ','.join(totalCF[0:len(totalCF)]))
+	elif lines == 2:
+		c2.drawString(width/45,height-3.5*(height/25),"CF Totals: " + ','.join(totalCF[0:19]))
+		c2.drawString(width/45,height-4*(height/25),','.join(totalCF[19:len(totalCF)]))
+	else:
+		c2.drawString(width/45,height-3.5*(height/25),"CF Totals: " + ','.join(totalCF[0:19]))
+		c2.drawString(width/45,height-4*(height/25),','.join(totalCF[19:43]))
+		c2.drawString(width/45,height-4.5*(height/25),','.join(totalCF[43:len(totalCF)]))
+	if lines == 1:
+		c2.drawString(width/45,height-5*(height/25),"M Totals: " + ','.join(totalM[0:len(totalM)]))
+	elif lines == 2:
+		c2.drawString(width/45,height-5*(height/25),"M Totals: " + ','.join(totalM[0:19]))
+		c2.drawString(width/45,height-5.5*(height/25),','.join(totalM[19:len(totalM)]))
+	else:
+		c2.drawString(width/45,height-5*(height/25),"M Totals: " + ','.join(totalM[0:19]))
+		c2.drawString(width/45,height-5.5*(height/25),','.join(totalM[19:43]))
+		c2.drawString(width/45,height-6*(height/25),','.join(totalM[43:len(totalM)]))
+	if lines == 1:
+		c2.drawString(width/45,height-6.5*(height/25),"RP Totals: " + ','.join(totalCF[0:len(totalRP)]))
+	elif lines == 2:
+		c2.drawString(width/45,height-6.5*(height/25),"RP Totals: " + ','.join(totalRP[0:19]))
+		c2.drawString(width/45,height-7*(height/25),','.join(totalRP[19:len(totalRP)]))
+	else:
+		c2.drawString(width/45,height-6.5*(height/25),"RP Totals: " + ','.join(totalRP[0:19]))
+		c2.drawString(width/45,height-7*(height/25),','.join(totalRP[19:43]))
+		c2.drawString(width/45,height-7.5*(height/25),','.join(totalRP[43:len(totalRP)]))
+	if lines == 1:
+		c2.drawString(width/45,height-8*(height/25),"SP Totals: " + ','.join(totalSP[0:len(totalSP)]))
+	elif lines == 2:
+		c2.drawString(width/45,height-8*(height/25),"SP Totals: " + ','.join(totalSP[0:19]))
+		c2.drawString(width/45,height-8.5*(height/25),','.join(totalSP[19:len(totalSP)]))
+	else:
+		c2.drawString(width/45,height-8*(height/25),"SP Totals: " + ','.join(totalSP[0:19]))
+		c2.drawString(width/45,height-8.5*(height/25),','.join(totalSP[19:43]))
+		c2.drawString(width/45,height-9*(height/25),','.join(totalSP[43:len(totalSP)]))
+	if lines == 1:
+		c2.drawString(width/45,height-9.5*(height/25),"DB Totals: " + ','.join(totalDB[0:len(totalDB)]))
+	elif lines == 2:
+		c2.drawString(width/45,height-9.5*(height/25),"DB Totals: " + ','.join(totalDB[0:19]))
+		c2.drawString(width/45,height-10*(height/25),','.join(totalDB[19:len(totalDB)]))
+	else:
+		c2.drawString(width/45,height-9.5*(height/25),"DB Totals: " + ','.join(totalDB[0:19]))
+		c2.drawString(width/45,height-10*(height/25),','.join(totalDB[19:43]))
+		c2.drawString(width/45,height-10.5*(height/25),','.join(totalDB[43:len(totalDB)]))
+	if lines == 1:
+		c2.drawString(width/45,height-11*(height/25),"RW Totals: " + ','.join(totalRW[0:len(totalRW)]))
+	elif lines == 2:
+		c2.drawString(width/45,height-11*(height/25),"RW Totals: " + ','.join(totalRW[0:19]))
+		c2.drawString(width/45,height-11.5*(height/25),','.join(totalRW[19:len(totalRW)]))
+	else:
+		c2.drawString(width/45,height-11*(height/25),"RW Totals: " + ','.join(totalRW[0:19]))
+		c2.drawString(width/45,height-11.5*(height/25),','.join(totalRW[19:43]))
+		c2.drawString(width/45,height-12*(height/25),','.join(totalRW[43:len(totalRW)]))
+	if lines == 1:
+		c2.drawString(width/45,height-12.5*(height/25),"RT Totals: " + ','.join(totalRT[0:len(totalRT)]))
+	elif lines == 2:
+		c2.drawString(width/45,height-12.5*(height/25),"RT Totals: " + ','.join(totalRT[0:19]))
+		c2.drawString(width/45,height-13*(height/25),','.join(totalRT[19:len(totalRT)]))
+	else:
+		c2.drawString(width/45,height-12.5*(height/25),"RT Totals: " + ','.join(totalRT[0:19]))
+		c2.drawString(width/45,height-13*(height/25),','.join(totalRT[19:43]))
+		c2.drawString(width/45,height-13.5*(height/25),','.join(totalRT[43:len(totalRT)]))
+	if lines == 1:
+		c2.drawString(width/45,height-14*(height/25),"LB Totals: " + ','.join(totalLB[0:len(totalLB)]))
+	elif lines == 2:
+		c2.drawString(width/45,height-14*(height/25),"LB Totals: " + ','.join(totalLB[0:19]))
+		c2.drawString(width/45,height-14.5*(height/25),','.join(totalLB[19:len(totalLB)]))
+	else:
+		c2.drawString(width/45,height-14*(height/25),"LB Totals: " + ','.join(totalLB[0:19]))
+		c2.drawString(width/45,height-14.5*(height/25),','.join(totalLB[19:43]))
+		c2.drawString(width/45,height-15*(height/25),','.join(totalLB[43:len(percentLB)]))
+	if lines == 1:
+		c2.drawString(width/45,height-15.5*(height/25),"Wins: " + ','.join(wins[0:len(wins)]))
+	elif lines == 2:
+		c2.drawString(width/45,height-15.5*(height/25),"Wins: " + ','.join(wins[0:19]))
+		c2.drawString(width/45,height-16*(height/25),','.join(wins[19:len(wins)]))
+	else:
+		c2.drawString(width/45,height-15.5*(height/25),"Wins: " + ','.join(wins[0:19]))
+		c2.drawString(width/45,height-16*(height/25),','.join(wins[19:43]))
+		c2.drawString(width/45,height-16.5*(height/25),','.join(wins[43:len(wins)]))
+	if lines == 1:
+		c2.drawString(width/45,height-17*(height/25),"High Goal Total: " + ','.join(totalHG[0:len(totalHG)]))
+	elif lines == 2:
+		c2.drawString(width/45,height-17*(height/25),"High Goal Total: " + ','.join(totalHG[0:19]))
+		c2.drawString(width/45,height-17.5*(height/25),','.join(totalHG[19:len(totalHG)]))
+	else:
+		c2.drawString(width/45,height-17*(height/25),"High Goal Total: " + ','.join(totalHG[0:19]))
+		c2.drawString(width/45,height-17.5*(height/25),','.join(totalHG[19:43]))
+		c2.drawString(width/45,height-18*(height/25),','.join(totalHG[43:len(totalHG)]))
+	if lines == 1:
+		c2.drawString(width/45,height-18.5*(height/25),"Low Goal Total: " + ','.join(totalLG[0:len(totalLG)]))
+	elif lines == 2:
+		c2.drawString(width/45,height-18.5*(height/25),"Low Goal Total: " + ','.join(totalLG[0:19]))
+		c2.drawString(width/45,height-19*(height/25),','.join(totalLG[19:len(totalLG)]))
+	else:
+		c2.drawString(width/45,height-18.5*(height/25),"Low Goal Total: " + ','.join(totalLG[0:19]))
+		c2.drawString(width/45,height-19*(height/25),','.join(totalLG[19:43]))
+		c2.drawString(width/45,height-19.5*(height/25),','.join(totalLG[43:len(totalLG)]))
+	# c.setFont("Helvetica",14)
+	# c.drawString(width/45,(height-(height/20))/2-(height/25), "Totals Rankings:")
+	# c.setFont("Helvetica",11)
+# def drawOverall():
+# 	c.drawString(width/2 + width/45, height-2*(height/25), "Completion Rankings (" + catagoryOverall + ")")
+drawTotals()
+# drawOverall()
+header()
+# drawTotals()
+drawPercentage()
+c.showPage()
+c.save()
+c2.showPage()
+c2.save()
