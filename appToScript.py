@@ -277,9 +277,9 @@ def generateAutoDict(teams):
 	return autoTeams
 
 def generateTotals(teams, teamOverall):
-	defenseTotals = {}
+	totals = {}
 	for key in teams:
-		defenseTotals[key] = {}
+		totals[key] = {}
 		totalPoints = 0
 		numOfSuccesses = [0, 0, 0, 0, 0, 0, 0, 0, 0] #number of times each average shows up
 		defenses = ["PC", "CF", "M", "RP", "SP", "DB", "RW", "RT", "LB"] #all possible defenses 
@@ -291,24 +291,33 @@ def generateTotals(teams, teamOverall):
 							numOfSuccesses[j] += 1
 			totalPoints += teams[key][i]["Total Points"][0]
 		for i in range(len(defenses)):
-			defenseTotals[key]["Total Successes to Cross " + defenses[i]] = numOfSuccesses[i]
-		defenseTotals[key]["Total Successes of High Goals"] = int(teamOverall[key]["Overall Probability of Scoring High Goals"].split("/", 1)[0])
-		defenseTotals[key]["Total Successes of Low Goals"] = int(teamOverall[key]["Overall Probability of Scoring Low Goals"].split("/", 1)[0])
-		defenseTotals[key]["Total Alliance Points"] = totalPoints
-	return defenseTotals
+			totals[key]["Total Successes to Cross " + defenses[i]] = numOfSuccesses[i]
+		totals[key]["Total Successes of High Goals"] = int(teamOverall[key]["Overall Probability of Scoring High Goals"].split("/", 1)[0])
+		totals[key]["Total Successes of Low Goals"] = int(teamOverall[key]["Overall Probability of Scoring Low Goals"].split("/", 1)[0])
+		totals[key]["Total Alliance Points"] = totalPoints
+	return totals
 
-def generateTotalsRankings(defenseTotals):
+def generateAutoTotals(autoTeams):
+	autoTotals = {}
+	for key in autoTeams:
+		autoTotals[key] = {}
+		autoTotals[key]["Total Successes of Auto High Goals"] = int(autoTeams[key]["Probability of Scoring Auto High Goals"].split("/", 1)[0])
+		autoTotals[key]["Total Successes of Auto Low Goals"] = int(autoTeams[key]["Probability of Scoring Auto Low Goals"].split("/", 1)[0])
+		autoTotals[key]["Total Successes of Crossing a Defense in Auto"] = int(autoTeams[key]["Ratio of Crossing a Defense in Auto"].split("/", 1)[0])
+	return autoTotals
+
+def generateTotalsRankings(totals):
 	totalsRankings = {}
 	defenses = ["PC", "CF", "M", "RP", "SP", "DB", "RW", "RT", "LB"]
 	teamNumbers = []
-	for key in defenseTotals:
+	for key in totals:
 		teamNumbers.append(key)
 	for i in range(len(defenses)):
 		totalsRankings["Total Successes to Cross " + defenses[i]] = {}
-		defenseTotalValues = []
+		totalValues = []
 		for j in range(len(teamNumbers)):
-			defenseTotalValues.append(defenseTotals[teamNumbers[j]]["Total Successes to Cross " + defenses[i]])
-		bubbleSortHighToLow(defenseTotalValues, teamNumbers) #sorts teamNumbers based on defenseValues
+			totalValues.append(totals[teamNumbers[j]]["Total Successes to Cross " + defenses[i]])
+		bubbleSortHighToLow(totalValues, teamNumbers) #sorts teamNumbers based on defenseValues
 		for j in range(len(teamNumbers)):
 			totalsRankings["Total Successes to Cross " + defenses[i]][teamNumbers[j]] = j + 1
 	totalsRankings["Total Successes of High Goals"] = {}
@@ -318,21 +327,49 @@ def generateTotalsRankings(defenseTotals):
 	lowGoals = []
 	points = []
 	for i in range(len(teamNumbers)): #must have a separate loop for each proportion because order of teamNumbers will be messed up
-		highGoals.append(defenseTotals[teamNumbers[i]]["Total Successes of High Goals"])		
+		highGoals.append(totals[teamNumbers[i]]["Total Successes of High Goals"])		
 	bubbleSortHighToLow(highGoals, teamNumbers)
 	for j in range(len(teamNumbers)):
 		totalsRankings["Total Successes of High Goals"][teamNumbers[j]] = j + 1
 	for i in range(len(teamNumbers)):
-		lowGoals.append(defenseTotals[teamNumbers[i]]["Total Successes of Low Goals"])
+		lowGoals.append(totals[teamNumbers[i]]["Total Successes of Low Goals"])
 	bubbleSortHighToLow(lowGoals, teamNumbers)
 	for j in range(len(teamNumbers)):
 		totalsRankings["Total Successes of Low Goals"][teamNumbers[j]] = j + 1
 	for i in range(len(teamNumbers)):
-		points.append(defenseTotals[teamNumbers[i]]["Total Alliance Points"])
+		points.append(totals[teamNumbers[i]]["Total Alliance Points"])
 	bubbleSortHighToLow(points, teamNumbers)
 	for j in range(len(teamNumbers)):
 		totalsRankings["Total Alliance Points"][teamNumbers[j]] = j + 1
 	return totalsRankings
+
+def generateAutoTotalsRankings(autoTotals):
+	autoTotalsRankings = {}
+	teamNumbers = []
+	for key in autoTotals:
+		teamNumbers.append(key)
+	autoTotalsRankings["Total Successes of Auto High Goals"] = {}
+	autoTotalsRankings["Total Successes of Auto Low Goals"] = {}
+	autoTotalsRankings["Total Successes of Crossing a Defense in Auto"] = {}
+	autoHighGoals = []
+	autoLowGoals = []
+	autoCrosses = []
+	for i in range(len(teamNumbers)):
+		autoHighGoals.append(autoTotals[teamNumbers[i]]["Total Successes of Auto High Goals"])
+	bubbleSortHighToLow(autoHighGoals, teamNumbers)
+	for j in range(len(teamNumbers)):
+		autoTotalsRankings["Total Successes of Auto High Goals"][teamNumbers[j]] = j + 1
+	for i in range(len(teamNumbers)):
+		autoLowGoals.append(autoTotals[teamNumbers[i]]["Total Successes of Auto Low Goals"])
+	bubbleSortHighToLow(autoLowGoals, teamNumbers)
+	for j in range(len(teamNumbers)):
+		autoTotalsRankings["Total Successes of Auto Low Goals"][teamNumbers[j]] = j + 1
+	for i in range(len(teamNumbers)):
+		autoCrosses.append(autoTotals[teamNumbers[i]]["Total Successes of Crossing a Defense in Auto"])
+	bubbleSortHighToLow(autoCrosses, teamNumbers)
+	for j in range(len(teamNumbers)):
+		autoTotalsRankings["Total Successes of Crossing a Defense in Auto"][teamNumbers[j]] = j + 1
+	return autoTotalsRankings 
 
 def categoricalRankings(category, rankings, totalsRankings): #input a category and this will return the teams for that category from best to worst
 	teamRankings = []
@@ -439,27 +476,19 @@ def compareDefenseCategory(team1, team2, team3, defense1, defense2, overall):
 generateOneFile() #generates a file with all the appended text files!  NOTE: must delete the file generated to run the code again
 allFile.close()
 teams = generateDict("oneFile.txt")
-print teams
+#print teams
 autoTeams = generateAutoDict(teams)
-#print autoTeams
+print autoTeams
 overall = generateTeamOverall(teams)
 #print overall
 rankings = generateRankings(overall, autoTeams)
 totals = generateTotals(teams, overall)
-totalsRankings = generateTotalsRankings(totals)
-print rankings
-print categoricalRankings("Proportion of Wins", rankings, totalsRankings)
+autoTotals = generateAutoTotals(autoTeams)
+print autoTotals
+autoTotalsRankings = generateAutoTotalsRankings(autoTotals)
+print autoTotalsRankings
 #print totals
+totalsRankings = generateTotalsRankings(totals)
+#print totalsRankings
+#print categoricalRankings("Proportion of Wins", rankings, totalsRankings)
 totalRankings = generateTotalsRankings(totals)
-#keys = []
-#for key in overall:
-#	keys.append(key)
-#print keys[0]
-#print overall[keys[0]]
-#print keys[1]
-#print overall[keys[1]]
-#print keys[2]
-#print overall[keys[2]]
-#teamNumbers = [keys[0], keys[1], keys[2]]
-#defensesThree = compareDefenses3(overall[keys[0]], overall[keys[1]], overall[keys[2]], teamNumbers) 
-# category = compareDefenseCategory("7", "990", "107", "PC", "LB", overall)
