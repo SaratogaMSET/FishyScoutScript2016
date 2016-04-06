@@ -1,21 +1,110 @@
-Team Number, 107
-Match Number, 3
-Scouter Name, Tushie
-Defenses on Field, RP, M, DB, RW, LB
-Spy Zone, False
-Auto Reaches Defense, True
-Auto Crosses Defense, LB
-Auto High Goal Shots, 0 0
-Auto Low Goal Shots, 0
-Difficulty to Cross RP, 4
-Difficulty to Cross M, 3 1
-Difficulty to Cross DB, 2 2
-Difficulty to Cross RW, 2 2 1
-Difficulty to Cross LB, 0 0 3
-Teleop High Goal Shots, 1 0 0 1
-Teleop Low Goal Shots, 1 0
-Total Points, 76
+Team Number, 649
+Match Number, 2
+Scouter Name, cm club
+Defenses on Field, LB, PC, M, DB, RW
+Spy Zone, True
+Auto Reaches Defense, False
+Auto Crosses Defense,   
+Auto High Goal Shots, 1 
+Auto Low Goal Shots, 
+Difficulty to Cross LB, 0 0 0 0 
+Difficulty to Cross PC, 1 
+Difficulty to Cross M, 
+Difficulty to Cross DB, 1 
+Difficulty to Cross RW, 0 
+Teleop High Goal Shots, 1 1 1 1 1 
+Teleop Low Goal Shots, 
+Shots Blocked, 
+Total Points, 120
 Play Defense, False
-End Game, H, CHA
-Result, Lose
-Notes, ew
+End Game, CHA, CAP, B
+Result, Win
+Notes, Giulio
+Team Number, 1678
+Match Number, 5
+Scouter Name, kjhkjh
+Defenses on Field, LB, CF, M, SP, RW
+Spy Zone, True
+Auto Reaches Defense, False
+Auto Crosses Defense, CF
+Auto High Goal Shots, 1 1 
+Auto Low Goal Shots, 
+Difficulty to Cross LB, 0 0 1 
+Difficulty to Cross CF, 2 2 0 
+Difficulty to Cross M, 3 3 
+Difficulty to Cross SP, 0 
+Difficulty to Cross RW, 
+Teleop High Goal Shots, 1 1 1 
+Teleop Low Goal Shots, 0 1 1 
+Shots Blocked, 1 1 0 0 1
+Total Points, 163
+Play Defense, True
+End Game, H, CAP, B
+Result, Win
+Notes, wow so good citrus circuits be the real MVP
+Team Number, 846
+Match Number, 5
+Scouter Name, kjhkjh
+Defenses on Field, LB, CF, M, SP, RW
+Spy Zone, True
+Auto Reaches Defense, False
+Auto Crosses Defense, CF
+Auto High Goal Shots, 1 1 
+Auto Low Goal Shots, 
+Difficulty to Cross LB, 0 0 1 
+Difficulty to Cross CF, 2 2 0 
+Difficulty to Cross M, 3 3 
+Difficulty to Cross SP, 0 
+Difficulty to Cross RW, 
+Teleop High Goal Shots, 1 1 1 
+Teleop Low Goal Shots, 0 1 1 
+Shots Blocked, 1 0
+Total Points, 163
+Play Defense, False
+End Game, H, CAP, B
+Result, Win
+Notes, wow so good citrus circuits be the real MVP
+Team Number, 254
+Match Number, 5
+Scouter Name, kjhkjh
+Defenses on Field, LB, CF, M, SP, RW
+Spy Zone, True
+Auto Reaches Defense, False
+Auto Crosses Defense, CF
+Auto High Goal Shots, 1 1 
+Auto Low Goal Shots, 
+Difficulty to Cross LB, 0 0 1 
+Difficulty to Cross CF, 2 2 0 
+Difficulty to Cross M, 3 3 
+Difficulty to Cross SP, 0 
+Difficulty to Cross RW, 
+Teleop High Goal Shots, 1 1 1 
+Teleop Low Goal Shots, 0 1 1 
+Shots Blocked, 0 0 0 1
+Total Points, 163
+Play Defense, False
+End Game, H, CAP, B
+Result, Win
+Notes, wow so good citrus circuits be the real MVP
+Team Number, 368
+Match Number, 5
+Scouter Name, kjhkjh
+Defenses on Field, LB, CF, M, SP, RW
+Spy Zone, True
+Auto Reaches Defense, False
+Auto Crosses Defense, CF
+Auto High Goal Shots, 1 1 
+Auto Low Goal Shots, 
+Difficulty to Cross LB, 0 0 1 
+Difficulty to Cross CF, 2 2 0 
+Difficulty to Cross M, 3 3 
+Difficulty to Cross SP, 0 
+Difficulty to Cross RW, 
+Teleop High Goal Shots, 1 1 1 
+Teleop Low Goal Shots, 0 1 1 
+Shots Blocked,
+Total Points, 163
+Play Defense, False
+End Game, H, CAP, B
+Result, Win
+Notes, wow so good citrus circuits be the real MVP

@@ -1,21 +1,22 @@
-Team Number, 87
-Match Number, 13
-Scouter Name, Candace
-Defenses on Field, RP, SP, DB, PC, LB
-Spy Zone, True
-Auto Reaches Defense, True
+Team Number, 649
+Match Number, 3
+Scouter Name, Krugersdorp
+Defenses on Field, LB, PC, M, SP, RW
+Spy Zone, False
+Auto Reaches Defense, False
 Auto Crosses Defense, DB
-Auto High Goal Shots, 1 0 1 1
-Auto Low Goal Shots, 1
-Difficulty to Cross RP, 0
-Difficulty to Cross SP, 3 1
-Difficulty to Cross DB, 1 2
-Difficulty to Cross PC, 3 2 1 1
-Difficulty to Cross LB, 2 3 1
-Teleop High Goal Shots, 1 0 0 1 1
-Teleop Low Goal Shots, 1 1
-Total Points, 207
-Play Defense, True
-End Game, H, B
-Result, Win
-Notes, uh
+Auto High Goal Shots, 1 
+Auto Low Goal Shots, 
+Difficulty to Cross LB, 0 
+Difficulty to Cross PC, 2 
+Difficulty to Cross M, 1 0 
+Difficulty to Cross SP, 2 
+Difficulty to Cross RW, 0 
+Teleop High Goal Shots, 
+Teleop Low Goal Shots, 1 1 0 1 0 1 
+Shots Blocked, 1 
+Total Points, 100
+Play Defense, False
+End Game, CHA, B
+Result, Tie
+Notes, fighting

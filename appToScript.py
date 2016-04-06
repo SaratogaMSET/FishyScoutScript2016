@@ -396,7 +396,7 @@ def generateAutoTotalsRankings(autoTotals):
 		autoTotalsRankings["Total Successes of Crossing a Defense in Auto"][teamNumbers[j]] = j + 1
 	return autoTotalsRankings 
 
-def categoricalRankings(category, rankings, totalsRankings): #input a category and this will return the teams for that category from best to worst
+def categoricalRankings(category, rankings, totalsRankings, autoTotalsRankings): #input a category and this will return the teams for that category from best to worst
 	teamRankings = []
 	for key in rankings:
 		if key == category:
@@ -415,6 +415,16 @@ def categoricalRankings(category, rankings, totalsRankings): #input a category a
 			for k in totalsRankings[key]:
 				teamNumbers.append(k)
 				teamRanks.append(totalsRankings[key][k])
+			bubbleSortLowToHigh(teamRanks, teamNumbers)
+			for i in range(len(teamNumbers)):
+				teamRankings.append(teamNumbers[i])
+	for key in autoTotalsRankings:
+		if key == category:
+			teamNumbers = []
+			teamRanks = []
+			for k in autoTotalsRankings[key]:
+				teamNumbers.append(k)
+				teamRanks.append(autoTotalsRankings[key][k])
 			bubbleSortLowToHigh(teamRanks, teamNumbers)
 			for i in range(len(teamNumbers)):
 				teamRankings.append(teamNumbers[i])
@@ -510,7 +520,7 @@ rankings = generateRankings(overall, autoTeams)
 print rankings
 totals = generateTotals(teams, overall)
 autoTotals = generateAutoTotals(autoTeams)
-#print autoTotals
+print autoTotals
 autoTotalsRankings = generateAutoTotalsRankings(autoTotals)
 #print autoTotalsRankings
 print totals
