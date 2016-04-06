@@ -1,44 +1,39 @@
 setlocal enabledelayedexpansion
+set inputDir=
 set outputDir=
 :start
-title ADB Tester
+title Team 649 M-SET Fish: Android Debug Bridge
 @echo off
-ECHO i INPUT
-ECHO o OUTPUT
-ECHO a ADB
-@echo off
-IF "%~1"=="-i" set inputDir=%2
-IF "%~3"=="-o" set outputDir=%4
-IF "%~5"=="-a" GOTO a
-SET inputDir=%2
-SET outputDir=%4
+REM CHECK FOR FOLDER TRANSMIT.
+IF "%~1"=="-f" GOTO transmit
+REM set to commands.
+IF "%~1"=="-i" set inputDir=/sdcard/Notes
+IF "%~2"=="-o" goto checkParam4
+:checkParam4
+SET inputDir=/sdcard/Notes
+SET outputDir=C:\Python27\FishyScoutScript2016
 echo New input directory is !inputDir!
 PAUSE  
-mkdir !outputDir!
-mkdir !outputDir!\output      
-echo New output directory is !outputDir!
+echo New output directory is in the FishyScoutScript2016 folder, located in the Python27 folder in the C drive.
 PAUSE
 echo.
-:a       
+IF "%~4"=="-a" GOTO a
+:a
 echo Ready to use ADB commands.
 PAUSE
-echo.
-echo Showing currently connected ADB devices. Serial number first, then status.
-PAUSE
 adb devices
-echo.
-adb get-serialno
-!serialno!
-@echo on
-@echo !SERIALNO!
-adb pull !inputDir!/scoutNotes.txt !outputDir!
+adb pull !inputDir! !outputDir!
 PAUSE
 echo.
 echo Pulled from the input Directory !inputDir! and pushed to the output Directory !outputDir!.
 PAUSE
-echo Exiting Command Line
+cls
+GOTO end
+:transmit
+title Folder Transmitter
+adb push C:\Python27\FishyScoutScript2016\Categories /sdcard/Categories
+echo pushed Categories
+adb push C:\Python27\FishyScoutScript2016\teamNumbers /sdcard/teamNumbers
+echo pushed teamNumbers
 PAUSE
-echo Clearing Space
-PAUSE
-clear
-EXIT /B no
+:end
