@@ -8,8 +8,8 @@ REM CHECK FOR FOLDER TRANSMIT.
 IF "%~1"=="-f" GOTO transmit
 REM set to commands.
 IF "%~1"=="-i" set inputDir=/sdcard/Notes
-IF "%~2"=="-o" goto checkParam4
-:checkParam4
+IF "%~2"=="-o" goto checkParam3
+:checkParam3
 SET inputDir=/sdcard/Notes
 SET outputDir=C:\Python27\FishyScoutScript2016
 echo New input directory is !inputDir!
@@ -17,7 +17,7 @@ PAUSE
 echo New output directory is in the FishyScoutScript2016 folder, located in the Python27 folder in the C drive.
 PAUSE
 echo.
-IF "%~4"=="-a" GOTO a
+IF "%~3"=="-a" GOTO a
 :a
 echo Ready to use ADB commands.
 PAUSE
